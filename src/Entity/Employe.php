@@ -62,12 +62,16 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Avis::class)]
     private Collection $avis;
 
+    #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Voiture::class)]
+    private Collection $voitures;
+
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
         $this->horaires = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->avis = new ArrayCollection();
+        $this->voitures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -338,6 +342,36 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($avi->getIDemploye() === $this) {
                 $avi->setIDemploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voiture>
+     */
+    public function getVoitures(): Collection
+    {
+        return $this->voitures;
+    }
+
+    public function addVoiture(Voiture $voiture): self
+    {
+        if (!$this->voitures->contains($voiture)) {
+            $this->voitures->add($voiture);
+            $voiture->setIDemploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(Voiture $voiture): self
+    {
+        if ($this->voitures->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getIDemploye() === $this) {
+                $voiture->setIDemploye(null);
             }
         }
 

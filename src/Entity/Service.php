@@ -25,9 +25,13 @@ class Service
     #[ORM\OneToMany(mappedBy: 'IDservice', targetEntity: Description::class)]
     private Collection $descriptions;
 
+    #[ORM\OneToMany(mappedBy: 'IDservice', targetEntity: Realiser::class)]
+    private Collection $realisers;
+
     public function __construct()
     {
         $this->descriptions = new ArrayCollection();
+        $this->realisers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class Service
             // set the owning side to null (unless already changed)
             if ($description->getIDservice() === $this) {
                 $description->setIDservice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Realiser>
+     */
+    public function getRealisers(): Collection
+    {
+        return $this->realisers;
+    }
+
+    public function addRealiser(Realiser $realiser): self
+    {
+        if (!$this->realisers->contains($realiser)) {
+            $this->realisers->add($realiser);
+            $realiser->setIDservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRealiser(Realiser $realiser): self
+    {
+        if ($this->realisers->removeElement($realiser)) {
+            // set the owning side to null (unless already changed)
+            if ($realiser->getIDservice() === $this) {
+                $realiser->setIDservice(null);
             }
         }
 
