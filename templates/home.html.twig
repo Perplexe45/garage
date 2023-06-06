@@ -1,0 +1,257 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+  Garage Parrot
+{% endblock %}
+
+{% block presentation %}
+   <header>
+    <div class="">
+      <h1 class="display-4 bg-light" mbr-fonts-style align-center  >Bienvenue cher client</h1>
+    </div>
+    
+  </header>
+  <section>
+    <div class="content">
+      <div class="box">
+        <h2>Depuis 15 ans, notre garage a su gagner votre confiance et vos sourires.</h2>
+        <p>En effet, nous avons des services de qualité, une expertise inégalée et une équipe dévouée
+        grace à nos techniciens qui font tout pour vous apporter une entière satisfaction. <br>Bienvenue chez nous !</p>
+        
+        <p style="text-align: center;"><span style="font-weight: bold; font-size: 24px;">Mr Parrot Vincent</span></p>
+      </div>
+     
+    </div>
+  </section>
+  
+  <hr class="custom-line"><hr class="custom-line">
+
+{% endblock %}
+
+
+{% block caroussel %}
+
+   <!-- Caroussel -->
+      <div class="cadre">
+          <div class="col-md-7 col-lg-7 m-auto"> <br>
+            <h6 class="text-center display-5">Quelques belles voitures qui sont passées dans notre garage</h6>
+            <!-- Carousel -->
+            <div class="carousel slide" data-bs-ride="carousel" data-interval="1000">
+              
+            <!-- The slideshow/carousel -->
+              <div class="carousel-inner carousel slide data-bs-ride=carousel">
+              <div class="carousel-item active">
+                <img src="{{ asset('assets/images/car1.jpg') }}" alt="Premier jardin" class="d-block img-fluid rounded-3 " style="width:100%">
+                <div class="carousel-caption pt-1 pb-1 ps-2 pe-2" >
+                  
+              
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="{{ asset('assets/images/car2.jpg') }}" alt="Deuxième jardin" class="d-block img-fluid rounded-3" style="width:100%">
+                <div class="carousel-caption pt-1 pb-1 ps-auto pe-auto">
+                
+                </div> 
+              </div>
+              
+              <div class="carousel-item">
+                <img src="{{ asset('assets/images/car3.jpg') }}" alt="Troisième jardin" class="d-block img-fluid rounded-3" style="width:100%">
+                <div class="carousel-caption pt-1 pb-1 ps-2 pe-2">
+              
+                </div>  
+              </div>
+              
+            </div>
+            
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+        </div>
+  <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+  <hr> <hr> <hr>
+  <hr class="custom-line"><hr class="custom-line">
+ 
+{% endblock %}
+
+{% block gallery %}
+<section data-bs-version="5.1" class="my-5" id="gallery5-n">
+    <div class="container">
+        <div class="text-center">
+            <h6 class="align-center display-4 pt-1"><strong>Voici les services que nous offrons</strong></h6>
+        </div><br>
+        <div class="row text-center justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="image-container" onclick="showText(this)">
+                  <img class="w-100 cursor-pointer" src="{{ asset('assets/images/reparation.png') }}" alt="">
+                  <h6 class="align-center mt-2 display-7">Réparation</h6>
+              </div>
+              <div class="text-container">
+                <p></p>
+                <button class="button_hide" onclick="showImage(this)">Revenir à l'image</button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="image-container" onclick="showText(this)">
+                  <img class="w-100 cursor-pointer" src="{{ asset('assets/images/entretien.png') }}" alt="">
+                  <h6 class="align-center mt-2 display-7">Entretien</h6>
+              </div>
+              <div class="text-container">
+                <p></p>
+                <button class="button_hide" onclick="showImage(this)">Revenir à l'image</button>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="image-container" onclick="showText(this)">
+                  <img class="w-100 cursor-pointer" src="{{ asset('assets/images/venteVehicules.png') }}" alt="">
+                  <h6 class="align-center mt-2 display-7">Vente véhicules</h6>
+              </div>
+              <div class="text-container">
+                <p></p>
+                <button class="button_hide" onclick="showImage(this)">Revenir à l'image</button>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+<hr class="custom-line"><hr class="custom-line">
+{% endblock %}
+
+{% block avisClients %}
+  <section data-bs-version="5.1" class="my-3">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="title col-12 col-md-9 mt-1">
+          <h3 class="mbr-section-title mbr-fonts-style align-center mb-1 display-4 text-center"><strong>Commentaires et notes des clients</strong></h3>
+          
+          <div class="container my-5">
+            <div class="row">
+              <!-- Colonnes des avis des clients -->
+              <div class="col-md-7">
+                <div class="card">
+                 <div class="card-body bg-warning">
+                  <h1 class="text-center pr-5">Avis des clients</h1>
+                  <div class="pr-5 form-scroll border border-primary rounded m-3">
+                    
+                    <!-- Affichage des témoignages -->
+                    {% for temoignage in temoignages %}
+                      {% if temoignage.acceptation == 1 %}
+                        <div class="card my-3 border border-dark">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ temoignage.id }}-   {{ temoignage.nom }}</h5>
+                            <p class="card-text">{{ temoignage.commentaire }}</p>
+                            <p class="card-text">Note: {{ temoignage.note ~ '/5' }}</p>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+                
+            </div> <div class="col-md-1"></div>
+              
+              <!-- Colonne du formulaire -->
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body bg-warning">
+                    <h1 class="card-title text-center">Laissez votre témoignage</h1><br>
+                    <form method="POST" action="{{ path('traitement_temoignage') }}" class="border border-primary rounded p-4" class="border border-primary rounded p-4">
+                      <div class="mb-3">
+                        <label for="nom" class="form-label">Nom :</label>
+                        <input type="text" class="form-control border border-primary" id="nom" name="nom" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="commentaire" class="form-label">Commentaire :</label>
+                        <textarea class="form-control border border-primary" id="commentaire" name="commentaire" required style="height: 142px;"></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="note" class="form-label">Note :</label>
+                        <div class="col-md-6">
+                          <input type="number" class="form-control border border-primary" id="note" name="note" min="1" max="5" required>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Soumettre</button>
+                    </form>
+
+                    {# Message informant que le formulaire a été soumis #}
+                    {# {% if form_submitted %}
+                      <div class="alert alert-success mt-3" role="alert">
+                        Le formulaire a été soumis avec succès !
+                      </div>
+                    {% endif %} #}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="custom-line"><hr class="custom-line">
+{% endblock %}
+
+  {% block formulaireClients %}
+    <section data-bs-version="5.1" class="form7">
+      <div class="container">
+        <div class="row justify-content-center mt-4 ">
+            <div class="col-lg-7 mx-auto">
+              <div class="card">
+                <div class="card-body bg-secondary">
+                  <div class="mt-4 pt-2">
+                    <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-4 text-center"><strong>Contactez-nous</strong></h3>
+                  </div>
+                    <form method="POST" action="{{ path('contactClients') }}" class="mbr-form form-with-styler mx-auto" data-form-title="Form Name">
+                      <input type="hidden" name="email" data-form-email="true" value="">
+                      <div class="row">
+                          <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Merci de nous avoir contacté</div>
+                          <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12"></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto">
+                            <p class="mbr-text mbr-fonts-style align-left mb-4 display-7 text-center">
+                                ( Un membre de notre équipe vous recontactera. )
+                            </p>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
+                            <input type="text" name="name" placeholder="Nom" data-form-field="name" class="form-control" value="" id="name-form7-o">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
+                            <input type="text" name="prenom" placeholder="Prénom" data-form-field="prenom" class="form-control" value="" id="prenom-form7-o">
+                        </div>
+
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="email">
+                            <input type="email" name="email" placeholder="Adresse Email" data-form-field="email" class="form-control" value="" id="email-form7-o">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
+                            <input type="tel" name="phone" placeholder="Téléphone" data-form-field="phone" class="form-control" value="" id="phone-form7-o">
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
+                            <input type="tel" name="message" placeholder="Message" data-form-field="messahge" class="form-control" value="" id="message-form7-o">
+                        </div>
+                        <div class="col-lg-7 mx-auto mbr-section-btn align-center">
+                            <button type="submit" class="btn btn-primary display-4">Envoyer</button>
+                        </div>
+                      </div>
+                </form>
+                </div>
+              </div>
+              
+              
+            </div> 
+          </div> 
+        </div>  
+      </div>   
+    </div>
+  </section>
+
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-4"></div>
+            <div class="col-4">
+                 <div class="rounded">
+                    <h1 class="text-center"> Ajouter des employés</h1>
+                </div>
+                <br>
+                <div class="card custom-card bg-dark-subtle"> <!-- Ajout de la classe custom-card -->
+                    <div class="card-body">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+{% endblock %}
