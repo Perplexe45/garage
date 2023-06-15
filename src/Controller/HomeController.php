@@ -46,6 +46,7 @@ class HomeController extends AbstractController
         $avis->setNote($note);
         $avis->setAcceptation(0);
         $avis->setNom($nom);
+       
 
         //Par défaut setidentifiant =1 sinon ereur 
         $avis->setIDemploye($entityManager->getRepository(Employe::class)->find(1));

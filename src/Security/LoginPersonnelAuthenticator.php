@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\Employe;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +22,11 @@ class LoginPersonnelAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_connexion';
+    private $entityManager;
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, EntityManagerInterface $entityManager)
     {
+        $this->entityManager = $entityManager;
     }
 
     public function authenticate(Request $request): Passport
@@ -53,15 +56,19 @@ class LoginPersonnelAuthenticator extends AbstractLoginFormAuthenticator
         // For example:
 
         if ($employe instanceof Employe && $employe->isIsAdmin()) {
+
             // Afficher la vue pour les administrateurs
-            return new RedirectResponse($this->urlGenerator->generate('app_admin'));
+            return new RedirectResponse($this->urlGenerator->generate('app_admin'));//Dashboard admin
         } else {
-            // Afficher la vue pour les non-administrateurs
-            return new RedirectResponse($this->urlGenerator->generate('app_employe'));
+            //Sécurité pour que l'employé ne devienne jamais administrateur et affiche la vue pour les non-administrateurs
+            return new RedirectResponse($this->urlGenerator->generate('app_employe'));//Dashboard employe
         }
 
         #return new RedirectResponse($this->urlGenerator->generate('app_admin'));
     }
+
+   
+    
 
     protected function getLoginUrl(Request $request): string
     {

@@ -16,7 +16,7 @@ class DashboardGerantController extends AbstractDashboardController
     #[Route('/admin/gerant', name: 'app_admin')]
     public function index(): Response
     {
-        //return parent::index();
+        
         return $this->render('security/dashboard_admin.html.twig');
 
     }
@@ -31,7 +31,7 @@ class DashboardGerantController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Employés', 'fas fa-list', Employe::class);
+        yield MenuItem::linkToCrud('Employés', 'fas fa-user', Employe::class);
         
     }
 }

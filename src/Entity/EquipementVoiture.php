@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EquipementVoitureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EquipementVoitureRepository::class)]
@@ -20,6 +22,14 @@ class EquipementVoiture
     #[ORM\ManyToOne(inversedBy: 'equipementVoitures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Equipement $IDequipement = null;
+
+    #[ORM\OneToMany(mappedBy: 'IDequipement', targetEntity: Voiture::class)]
+    private Collection $voitures;
+
+    public function __construct()
+    {
+        $this->voitures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -46,6 +56,36 @@ class EquipementVoiture
     public function setIDequipement(?Equipement $IDequipement): self
     {
         $this->IDequipement = $IDequipement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voiture>
+     */
+    public function getVoitures(): Collection
+    {
+        return $this->voitures;
+    }
+
+    public function addVoiture(Voiture $voiture): self
+    {
+        if (!$this->voitures->contains($voiture)) {
+            $this->voitures->add($voiture);
+            $voiture->setIDequipement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoiture(Voiture $voiture): self
+    {
+        if ($this->voitures->removeElement($voiture)) {
+            // set the owning side to null (unless already changed)
+            if ($voiture->getIDequipement() === $this) {
+                $voiture->setIDequipement(null);
+            }
+        }
 
         return $this;
     }

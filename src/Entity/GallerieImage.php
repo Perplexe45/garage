@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\GallerieImageRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Vich\UploadableField;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GallerieImageRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity(repositoryClass: GallerieImageRepository::class)]
 class GallerieImage
@@ -36,6 +40,9 @@ class GallerieImage
     #[ORM\OneToMany(mappedBy: 'IDgallerie_image', targetEntity: Voiture::class)]
     private Collection $voitures;
 
+    #[ORM\Column(length: 50)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
@@ -44,6 +51,11 @@ class GallerieImage
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()    //Il faut renvoyer un "get' ou la propriété déclaré est un "String", mais un 'get gégnéré dans la classe
+    {
+        return $this->getNom();
     }
 
     public function getImg1(): ?string
@@ -144,6 +156,18 @@ class GallerieImage
                 $voiture->setIDgallerieImage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

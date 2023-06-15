@@ -41,14 +41,26 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: EquipementVoiture::class)]
     private Collection $equipementVoitures;
 
+  
+
+    #[ORM\Column(length: 50)]
+    private ?string $titre_annonce = null;
+
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: OptionVoiture::class)]
     private Collection $optionVoitures;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    private ?EquipementVoiture $IDequipement = null;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    private ?OptionVoiture $IDoption = null;
 
     public function __construct()
     {
         $this->realisers = new ArrayCollection();
         $this->equipementVoitures = new ArrayCollection();
         $this->optionVoitures = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -91,6 +103,12 @@ class Voiture
 
         return $this;
     }
+
+    public function __toString()    //Il faut renvoyer un "get' ou la propriété déclaré est un "String", mais un 'get gégnéré dans la classe
+    {
+        return $this->getTitreAnnonce();
+    }
+
 
     public function getKilometre(): ?int
     {
@@ -188,6 +206,18 @@ class Voiture
         return $this;
     }
 
+    public function getTitreAnnonce(): ?string
+    {
+        return $this->titre_annonce;
+    }
+
+    public function setTitreAnnonce(string $titre_annonce): self
+    {
+        $this->titre_annonce = $titre_annonce;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, OptionVoiture>
      */
@@ -214,6 +244,30 @@ class Voiture
                 $optionVoiture->setIDvoiture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIDequipement(): ?EquipementVoiture
+    {
+        return $this->IDequipement;
+    }
+
+    public function setIDequipement(?EquipementVoiture $IDequipement): self
+    {
+        $this->IDequipement = $IDequipement;
+
+        return $this;
+    }
+
+    public function getIDoption(): ?OptionVoiture
+    {
+        return $this->IDoption;
+    }
+
+    public function setIDoption(?OptionVoiture $IDoption): self
+    {
+        $this->IDoption = $IDoption;
 
         return $this;
     }

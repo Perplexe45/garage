@@ -144,6 +144,11 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function __toString()
+    {
+        return $this->getNom(); 
+    }
+
     public function getNom(): ?string
     {
         return $this->nom;

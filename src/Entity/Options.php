@@ -2,14 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\OptionRepository;
+use App\Repository\OptionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OptionRepository::class)]
-#[ORM\Table(name: '`option`')]
-class Option
+#[ORM\Entity(repositoryClass: OptionsRepository::class)]
+class Options
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,7 +18,7 @@ class Option
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'IDoption', targetEntity: OptionVoiture::class)]
+    #[ORM\OneToMany(mappedBy: 'IDoptions', targetEntity: OptionVoiture::class)]
     private Collection $optionVoitures;
 
     public function __construct()
@@ -56,7 +55,7 @@ class Option
     {
         if (!$this->optionVoitures->contains($optionVoiture)) {
             $this->optionVoitures->add($optionVoiture);
-            $optionVoiture->setIDoption($this);
+            $optionVoiture->setIDoptions($this);
         }
 
         return $this;
@@ -66,8 +65,8 @@ class Option
     {
         if ($this->optionVoitures->removeElement($optionVoiture)) {
             // set the owning side to null (unless already changed)
-            if ($optionVoiture->getIDoption() === $this) {
-                $optionVoiture->setIDoption(null);
+            if ($optionVoiture->getIDoptions() === $this) {
+                $optionVoiture->setIDoptions(null);
             }
         }
 
