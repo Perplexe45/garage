@@ -33,6 +33,9 @@ class Contact
     #[ORM\JoinColumn(nullable: false)]
     private ?Employe $IDemploye = null;
 
+    #[ORM\ManyToOne(inversedBy: 'contacts')]
+    private ?Voiture $IDvoiture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Contact
     public function setIDemploye(?Employe $IDemploye): self
     {
         $this->IDemploye = $IDemploye;
+
+        return $this;
+    }
+
+    public function getIDvoiture(): ?Voiture
+    {
+        return $this->IDvoiture;
+    }
+
+    public function setIDvoiture(?Voiture $IDvoiture): self
+    {
+        $this->IDvoiture = $IDvoiture;
 
         return $this;
     }

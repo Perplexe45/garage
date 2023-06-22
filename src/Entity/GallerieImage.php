@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use Vich\UploadableField;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\GallerieImageRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 
 #[ORM\Entity(repositoryClass: GallerieImageRepository::class)]

@@ -26,6 +26,10 @@ class OptionVoiture
     #[ORM\OneToMany(mappedBy: 'IDoption', targetEntity: Voiture::class)]
     private Collection $voitures;
 
+    // New property added
+    #[ORM\Column(nullable: true)]
+    private ?string $option = null;
+
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
@@ -60,6 +64,12 @@ class OptionVoiture
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getOption() ?? ''; // Retourne une chaîne vide si $option est nulle
+    }
+
+
     /**
      * @return Collection<int, Voiture>
      */
@@ -86,6 +96,19 @@ class OptionVoiture
                 $voiture->setIDoption(null);
             }
         }
+
+        return $this;
+    }
+
+    // Getter and setter for the "option" property
+    public function getOption(): ?string
+    {
+        return $this->option;
+    }
+
+    public function setOption(?string $option): self
+    {
+        $this->option = $option;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+
 use App\Entity\Contact;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,7 +22,7 @@ class ContactCrudController extends AbstractCrudController
 
     public function configureCrud (Crud $crud) : Crud
     {
-        return $crud
+            return $crud
             ->setEntityLabelInPlural('Contacts')
             ->setEntityLabelInSingular('contact')
             ->setPageTitle('index', 'Liste des contacts du garage')
@@ -32,13 +33,16 @@ class ContactCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            AssociationField::new('IDvoiture')->setLabel('Référence de l\'annonce (Si intérêt pour achat d\'une voiture)'),
             TextField::new('nom'),
             TextField::new('prenom'),
             EmailField::new('email'),
             TelephoneField::new('telephone'),
             TextareaField::new('message'),
-            AssociationField::new('IDemploye')->setLabel('Gérer par'),
+            AssociationField::new('IDemploye')->setLabel('Gérer par')
         ];
     }
+
+
    
 }

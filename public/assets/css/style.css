@@ -1,12 +1,12 @@
 .navbar-nav .nav-link:hover {
-  background-color: #d9e5eb; /* Couleur de surbrillance */
+  background-color: #b8d6e6; /* Couleur de surbrillance */
 }
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #a9a5a5;
+  background-color: #cdd9a4;
 }
 
 header {
@@ -28,8 +28,118 @@ hr.custom-line {
   display: none;
 }
 
+.custom-border {
+  background-color: #F5F5DC; /* Couleur blanc cassé */
+}
+
+.custom-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  height: 50px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 30px;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+}
+
+.form-select {
+  display: inline-block;
+  width: 250px;
+  text-align: left; 
+}
+
+.zoom-image {
+  transition: transform 0.3s ease;
+}
+
+.zoom-image:hover {
+  transform: scale(2.2);
+  cursor: pointer;
+}
+
+.characteristic-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #cccccc;
+}
+
+.small-text {
+  font-size: 1.1rem; 
+}
+
+.separation{
+  border: solid 1px black ;
+}
+
+.option-item.selected,
+.equipement-item.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #cce5ff;
+}
+
+.list-group-item:nth-child(even):hover {
+  background-color: #b3d7ff;
+}
+
+.list-group-item.selected {
+  background-color: #5a9de4;
+  color: #121111;
+}
+
+.confirmation-dialog {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-dialog-message {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.confirmation-dialog-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-dialog-buttons button {
+  margin: 0 10px;
+}
+
 .form-scroll {
-  height: 450px; /* hauteur fixe */
+  height: 530px; /* hauteur fixe */
   overflow-y: scroll; /* ajout de l'ascenseur vertical */
 }
 
@@ -92,10 +202,34 @@ h1 {
   margin-bottom: 20px;
 }
 
+.w-98{
+  width:100%;
+}
+
 h2 {
   color: #333;
   font-size: 24px;
   margin-top: 0;
+}
+
+.card {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #242627  
+}
+
+.h4-title{
+  border: solid 1px lightgreen;
+  border-top: 5% !important ;
+  background: rgb(234, 239, 241);
+  max-width: 900px;
+  text-align: center;
+  margin: auto;
+}
+
+.reference {
+  color: #007BFF;
 }
 
 p {
@@ -109,11 +243,26 @@ hr {
   border-top: 1px solid #eee;
 }
 
+.btn {
+  font-weight: 600;
+  border-width: 1px;
+  font-style: normal;
+  margin: 0.6rem 0.6rem;
+  white-space: normal;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+}
+
 footer {
   background-color: #8f8787;
   padding: 20px;
   text-align: center; 
   }
+
+  
 
   .garage-hours {
     margin-bottom: 10px;

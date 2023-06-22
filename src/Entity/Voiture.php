@@ -24,6 +24,9 @@ class Voiture
     #[ORM\Column(length: 30)]
     private ?string $mise_en_circulation = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $titre_annonce = null;
+
     #[ORM\Column]
     private ?int $kilometre = null;
 
@@ -41,11 +44,6 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: EquipementVoiture::class)]
     private Collection $equipementVoitures;
 
-  
-
-    #[ORM\Column(length: 50)]
-    private ?string $titre_annonce = null;
-
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: OptionVoiture::class)]
     private Collection $optionVoitures;
 
@@ -55,11 +53,21 @@ class Voiture
     #[ORM\ManyToOne(inversedBy: 'voitures')]
     private ?OptionVoiture $IDoption = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $vendu = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $reference = null;
+
+    #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: Contact::class)]
+    private Collection $contacts;
+
     public function __construct()
     {
         $this->realisers = new ArrayCollection();
         $this->equipementVoitures = new ArrayCollection();
         $this->optionVoitures = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
         
     }
 
@@ -104,10 +112,11 @@ class Voiture
         return $this;
     }
 
-    public function __toString()    //Il faut renvoyer un "get' ou la propriété déclaré est un "String", mais un 'get gégnéré dans la classe
+    public function __toString()   
     {
-        return $this->getTitreAnnonce();
+        return $this->getReference();
     }
+
 
 
     public function getKilometre(): ?int
@@ -172,7 +181,6 @@ class Voiture
                 $realiser->setIDvoiture(null);
             }
         }
-
         return $this;
     }
 
@@ -202,18 +210,6 @@ class Voiture
                 $equipementVoiture->setIDvoiture(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getTitreAnnonce(): ?string
-    {
-        return $this->titre_annonce;
-    }
-
-    public function setTitreAnnonce(string $titre_annonce): self
-    {
-        $this->titre_annonce = $titre_annonce;
 
         return $this;
     }
@@ -268,6 +264,72 @@ class Voiture
     public function setIDoption(?OptionVoiture $IDoption): self
     {
         $this->IDoption = $IDoption;
+
+        return $this;
+    }
+
+    public function isVendu(): ?bool
+    {
+        return $this->vendu;
+    }
+
+    public function setVendu(?bool $vendu): self
+    {
+        $this->vendu = $vendu;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getTitre_annonce(): ?string
+    {
+        return $this->titre_annonce;
+    }
+
+    public function setTitre_annonce(string $titre_annonce): self
+    {
+        $this->titre_annonce = $titre_annonce;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setIDvoiture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getIDvoiture() === $this) {
+                $contact->setIDvoiture(null);
+            }
+        }
 
         return $this;
     }

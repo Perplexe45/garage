@@ -1,0 +1,186 @@
+{% block body_content %}
+<head>
+  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  <title>optionVoitures</title>
+ </head>
+
+<div class="custom-dashboard-content">
+  {% include '/security/_nav.html.twig' %}
+  <h1 class="text-center mx-auto my-5">
+    <span class="border border-dark p-3 rounded-3 custom-border">Ajout d'options pour la vente de véhicules</span>
+  </h1>  
+
+  <div class="container">
+    
+    <form method="post" action="{{ path('options_voiture') }}">
+      <div class="form-group d-flex justify-content-center align-items-center my-5 py-5">
+        <label class="ps-4 fs-5 fw-bold" for="voiture" class="label-left">Sélection :</label>
+        <select class="form-select ms-2" id="voiture" name="voiture" data-selected-option="" onchange="handleSelectChange()">
+          <option value="">Référence de la voiture</option>
+          {% for voiture in voitures %}
+            <option value="{{ voiture.id }}">{{ voiture.reference }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-4 mb-4">
+          <h2>Options</h2>
+          <ul class="list-group">
+            {% for option in options %}
+              <li class="list-group-item option-item" data-id="{{ option.id }}">{{ option.nom }}</li>
+            {% endfor %}
+          </ul>
+
+          {# Récupération des lignes sélectionnées #}
+          {% set selectedOptions = app.request.request.get('selectedOptions') %}
+
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4 mb-4">
+          <h2>Équipements</h2>
+          <ul class="list-group">
+            {% for equipement in equipements %}
+              <li class="list-group-item cursor-pointer equipement-item" data-id="{{ equipement.id }}">{{ equipement.nom }}</li>
+            {% endfor %}
+          </ul>
+
+          {# Récupération des lignes sélectionnées #}
+          {% set selectedEquipements = app.request.request.get('selectedEquipements') %}
+        
+        </div>
+      </div>
+
+      <div class="text-center my-5">
+        <button class="custom-button" onclick="showConfirmationDialog(); submitOptions();">Valider ces options</button>
+        </div>
+
+      <!-- Boîte de confirmation -->
+      <div class="confirmation-dialog" id="confirmationDialog">
+        <div class="confirmation-dialog-message">
+          <p>Êtes-vous sûr de vouloir valider ces options ?</p>
+          <div class="confirmation-dialog-buttons">
+            <button onclick="confirmAction()">Oui</button>
+            <button onclick="cancelAction()">Non</button>
+          </div>
+        </div>
+      </div>
+
+     
+    {#   <div class="text-center my-5">
+        <button class="custom-button" onclick="submitOptions()">Valider</button>
+      </div> #}
+    </form>
+  </div>
+</div>
+
+<script>
+  ///////////////////////Gestion des 2 tableaux///////////////////////
+  // Code JavaScript pour gérer la sélection des éléments
+  const optionItems = document.querySelectorAll('.option-item');
+  const equipementItems = document.querySelectorAll('.equipement-item');
+  const optionsVoitureUrl = "{{ path('options_voiture') }}";
+
+  optionItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('selected');
+    });
+  });
+
+  equipementItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('selected');
+    });
+  });
+  
+
+  ////////////////////////Bouton sur Accepter les options///////////////////
+  // Fonction pour afficher la boîte de confirmation
+   function resetSelection() {nconfirmationD
+    const optionItems = document.querySelectorAll('.option-item');
+    const equipementItems = document.querySelectorAll('.equipement-item');
+
+    optionItems.forEach(item => {
+      item.classList.remove('selected');
+    });
+
+    equipementItems.forEach(item => {
+      item.classList.remove('selected');
+    });
+  }
+
+  function showConfirmationDialog() {
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'flex';
+  }
+
+  // Fonction pour confirmer l'action
+  function confirmAction() {
+    // Ajoutez ici le code pour traiter la validation des options
+    alert("Options validées !");
+
+    // Réinitialiser les lignes sélectionnées
+    resetSelection();
+
+    // Masquer la boîte de confirmation
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'none';
+  }
+
+  // Fonction pour gérer le changement de ligne dans le select
+  function handleSelectChange() {
+    const selectElement = document.getElementById('voiture');
+
+    // Vérifier si une option est sélectionnée et que sa valeur a changé
+    if (selectElement.value !== '' && selectElement.value !== selectElement.dataset.selectedOption) {
+      selectElement.dataset.selectedOption = selectElement.value; // Mettre à jour la valeur sélectionnée
+
+      resetSelection(); 
+    }
+  }
+
+  // Écouter l'événement de changement pour l'élément select
+  const selectElement = document.getElementById('voiture');
+  selectElement.addEventListener('change', handleSelectChange);
+
+  // Fonction pour annuler l'action
+  function cancelAction() {
+    // Réinitialiser les lignes sélectionnées
+    resetSelection();
+
+    // Masquer la boîte de confirmation
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'none';
+  }
+
+  // Fonction pour soumettre les options
+  function submitOptions() {
+    const selectedOptions = Array.from(document.querySelectorAll('.option-item.selected')).map(item => item.dataset.id);
+    const selectedEquipements = Array.from(document.querySelectorAll('.equipement-item.selected')).map(item => item.dataset.id);
+
+  
+    //code pour envoyer les données au serveur avec requête AJAX et bibliotheque JQuery
+    $.ajax({
+    url: optionsVoitureUrl,
+    type: "POST",
+    data: {
+      selectedOptions: selectedOptions,
+      selectedEquipements: selectedEquipements
+    },
+    success: function(response) {
+      // Gérer la réponse du serveur ici
+      alert("Options envoyées avec succès !");
+    },
+    error: function(xhr, status, error) {
+      // Gérer les erreurs ici
+      alert("Une erreur s'est produite lors de l'envoi des options : " + error);
+    }
+  });
+
+    // Réinitialiser les lignes sélectionnées
+    resetSelection();
+  }
+</script>
+{% endblock %}

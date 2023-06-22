@@ -1,4 +1,4 @@
-function showText(element) {
+/* function showText(element) {
 	var imageContainer = element;
 	var textContainer = element.nextElementSibling;
 
@@ -12,4 +12,4 @@ function showImage(element) {
 
 	textContainer.style.display = "none";
 	imageContainer.style.display = "block";
-}
+} */
