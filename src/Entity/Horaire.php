@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\HoraireRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HoraireRepository::class)]
@@ -14,17 +13,13 @@ class Horaire
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $jour = null;
+    #[ORM\Column(length: 10)]
+    private ?string $jour_semaine = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $heure_ouverture = null;
-
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $heure_fermeture = null;
+    #[ORM\Column(length: 255)]
+    private ?string $caracteristique = null;
 
     #[ORM\ManyToOne(inversedBy: 'horaires')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Employe $IDemploye = null;
 
     public function getId(): ?int
@@ -32,38 +27,26 @@ class Horaire
         return $this->id;
     }
 
-    public function getJour(): ?\DateTimeInterface
+    public function getJourSemaine(): ?string
     {
-        return $this->jour;
+        return $this->jour_semaine;
     }
 
-    public function setJour(\DateTimeInterface $jour): self
+    public function setJourSemaine(string $jour_semaine): self
     {
-        $this->jour = $jour;
+        $this->jour_semaine = $jour_semaine;
 
         return $this;
     }
 
-    public function getHeureOuverture(): ?\DateTimeInterface
+    public function getCaracteristique(): ?string
     {
-        return $this->heure_ouverture;
+        return $this->caracteristique;
     }
 
-    public function setHeureOuverture(\DateTimeInterface $heure_ouverture): self
+    public function setCaracteristique(string $caracteristique): self
     {
-        $this->heure_ouverture = $heure_ouverture;
-
-        return $this;
-    }
-
-    public function getHeureFermeture(): ?\DateTimeInterface
-    {
-        return $this->heure_fermeture;
-    }
-
-    public function setHeureFermeture(\DateTimeInterface $heure_fermeture): self
-    {
-        $this->heure_fermeture = $heure_fermeture;
+        $this->caracteristique = $caracteristique;
 
         return $this;
     }

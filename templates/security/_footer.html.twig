@@ -1,13 +1,43 @@
-<div class="garage-hours">
-            <p>
-                <strong>Horaires du garage :</strong><br>
-                Lundi - Jeudi : 8h - 18h<br>
-                Vendredi : 8h - 18h<br>
-                Samedi : 9h - 13h<br>
-                Dimanche : Fermé
-            </p>
-        </div>
+<!-- _footer.html.twig -->
 
-        <div>
-            <p> Adresse : 123 Rue Fictive, Ville Imaginaire, Pays Bidon</p>
+  
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="garage-hours">
+                {% if horaires %}
+                     <div class="row">
+                    <h2 class="text-center py-2" >Horaires du garage</h2>
+                        <div class="col-lg-5 pt-2">
+                            <ul>
+                                {% for i in range(0, 2) %}
+                                    <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-lg-5 pt-2">
+                            <ul>
+                                {% for i in range(3, 5) %}
+                                    <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6" >
+                            <ul>
+                                <li class="footer-dim">{{ horaires[6].getJourSemaine }} : {{ horaires[6].getCaracteristique }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
+        <div class="col-lg-6">
+            <div>
+                <p>Adresse : 123 Rue Fictive, Ville Imaginaire, Pays Bidon</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

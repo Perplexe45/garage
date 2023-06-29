@@ -51,6 +51,26 @@ class Options
         return $this->optionVoitures;
     }
 
+     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $selectedOptions;
+
+    // ...
+
+    public function getSelectedOptions(): ?array
+    {
+        return $this->selectedOptions;
+    }
+
+    public function setSelectedOptions(?array $selectedOptions): self
+    {
+        $this->selectedOptions = $selectedOptions;
+
+        return $this;
+    }
+
+
     public function addOptionVoiture(OptionVoiture $optionVoiture): self
     {
         if (!$this->optionVoitures->contains($optionVoiture)) {

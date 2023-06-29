@@ -19,9 +19,6 @@ class AjoutEmployeController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
     {
 
-        // Recherche de l'instance de l'Administrateur avec l'ID 1 (Mr Parrot)
-        //$administrateur = $entityManager->getRepository(Administrateur::class)->find(1);
-
         // Création d'une instance de l'Employe
         $employe = new Employe();
         

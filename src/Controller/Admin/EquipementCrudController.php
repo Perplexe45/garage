@@ -19,7 +19,8 @@ class EquipementCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Les équipement')
             ->setEntityLabelInSingular('un équipement')
             ->setPageTitle('index', 'Liste des équipements de voiture')
-            ->setPaginatorPageSize(10);
+            ->setPaginatorPageSize(10)
+            ->showEntityActionsInlined();
     }
 
     /*

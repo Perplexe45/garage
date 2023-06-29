@@ -51,6 +51,25 @@ class Equipement
         return $this->equipementVoitures;
     }
 
+      /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $selectedEquipements;
+
+    // ...
+
+    public function getSelectedEquipements(): ?array
+    {
+        return $this->selectedEquipements;
+    }
+
+    public function setSelectedEquipements(?array $selectedEquipements): self
+    {
+        $this->selectedEquipements = $selectedEquipements;
+
+        return $this;
+    }
+
     public function addEquipementVoiture(EquipementVoiture $equipementVoiture): self
     {
         if (!$this->equipementVoitures->contains($equipementVoiture)) {
@@ -60,6 +79,7 @@ class Equipement
 
         return $this;
     }
+    
 
     public function removeEquipementVoiture(EquipementVoiture $equipementVoiture): self
     {

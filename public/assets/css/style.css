@@ -1,12 +1,23 @@
+:root {
+  --sidebar-bg: '#deebff';
+}
+
 .navbar-nav .nav-link:hover {
   background-color: #b8d6e6; /* Couleur de surbrillance */
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #cdd9a4;
+  background-color: #C6AC8F;
+}
+
+main{
+  flex: 1;
 }
 
 header {
@@ -15,11 +26,11 @@ header {
   text-align: center;
 }
 
-hr.custom-line {
+.custom-line {
   border: none;
   height: 1.5mm;
-  background-color: #878585; /* Couleur principale */
-  background-image: linear-gradient(to right, #cdc3c3, #a9a5a5, #878585); /* Dégradé de couleurs */
+ 
+  background-image: linear-gradient(to right, #0A0908, #5E503F, #0A0908); /* Dégradé de couleurs */
   width: 60%; /* 6/10 de la largeur de la page */
   margin: 0 auto;
 }
@@ -68,11 +79,15 @@ hr.custom-line {
   cursor: pointer;
 }
 
+.footer-dim {
+  font-style: italic;
+}
+
 .characteristic-box {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 10px;
-  background-color: #cccccc;
+  background-color: #EAE0D5 ;
 }
 
 .small-text {
@@ -104,6 +119,33 @@ hr.custom-line {
 .list-group-item.selected {
   background-color: #5a9de4;
   color: #121111;
+}
+
+.service-list {
+  padding-left: 0;
+}
+
+.service-item {
+  text-align: left;
+}
+
+.evocation-list {
+  display: none;
+  padding-left: 20px;
+}
+
+.service-item:hover + .evocation-list {
+  background-color: #dae8af;
+  display: block;
+}
+
+.evocation-item {
+  text-align: left;
+}
+
+.w-30 { /* Photos gallerie */
+  width : 175px;
+  height: 115;
 }
 
 .confirmation-dialog {
@@ -150,6 +192,17 @@ hr.custom-line {
   padding: 15px;
 }
 
+.carderBord {
+  background-color: #5E503F;
+}
+
+.confirmation-dialog {
+  display: none;
+}
+
+.confirmation-dialog.show {
+  display: flex;
+}
 
 h1 {
   color: #0b0b0b;
@@ -212,11 +265,17 @@ h2 {
   margin-top: 0;
 }
 
+.card-color {
+  background-color: #5E503F;
+}
+
 .card {
-  font-family: Arial, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: #242627  
+  background-color: rgb(234, 239, 241);
+  margin: auto
+}
+
+h4 {
+  background: rgb(234, 239, 241);
 }
 
 .h4-title{
@@ -233,7 +292,7 @@ h2 {
 }
 
 p {
-  color: #555;
+  color: #0A0908;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -257,20 +316,11 @@ hr {
 }
 
 footer {
-  background-color: #8f8787;
+  background-color: #22333B;
   padding: 20px;
-  text-align: center; 
   }
 
-  
-
-  .garage-hours {
+.garage-hours , .garage-hours h2{
     margin-bottom: 10px;
+    color: #EAE0D5;
   }
-
-  .garage-address {
-    background-color: #000;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}

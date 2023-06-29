@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class VoitureCrudController extends AbstractCrudController
 {
@@ -17,6 +18,16 @@ class VoitureCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Voiture::class;
+    }
+
+    public function configureCrud (Crud $crud) : Crud
+    {
+        return $crud
+            ->setEntityLabelInPlural('Les types de service')
+            ->setEntityLabelInSingular('une prestation')
+            ->setPageTitle('index', 'Prestations de service du garage')
+            ->setPaginatorPageSize(20)
+            ->showEntityActionsInlined();
     }
 
     

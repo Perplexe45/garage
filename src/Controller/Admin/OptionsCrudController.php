@@ -19,7 +19,8 @@ class OptionsCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Liste des options')
             ->setEntityLabelInSingular('une option')
             ->setPageTitle('index', 'Liste des options de voitures')
-            ->setPaginatorPageSize(10);
+            ->setPaginatorPageSize(10)
+            ->showEntityActionsInlined();
     }
 
 

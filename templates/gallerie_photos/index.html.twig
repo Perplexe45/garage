@@ -2,8 +2,8 @@
 
 {% block body %}
 
-    <div class="border-title border border-danger bg-light rounded-3">
-        <h1 class="text-center my-5 display-6">Nos véhicules actuellement en vente</h1>
+    <div class="border-title border border-danger bg-light rounded-3" style="background-color: #ffffff; color: #000000;">
+        <h1 class="text-center my-5 display-6 style="background-color: #ffffff; color: #000000;"">Nos véhicules actuellement en vente</h1>
     </div>
 
     <div class="container my-5">
@@ -13,16 +13,17 @@
                 <div class="row mb-5">
                     <div class="col-md-4 mb-3">
                         <div class="voiture-item">
-                            <div class="card">
-                                <h4 class="text-center">Référence: <span class="reference">{{ voiture.reference }}</span></h4>
+                            <div class="card d-flex align-items-center justify-content-center">
+                                <h4 class="text-center pt-2">Référence: <span class="reference">{{ voiture.reference }}</span></h4>
                             </div>
-                            <img id="voiture-image" class="w-98 rounded-bottom-3" src="/uploads/{{ voiture.image }}" alt="image de la voiture">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="ps-3 py-2">kilomètres: <span class="text-muted">{{ voiture.kilometre }} km</span></h5>
-                                <h5 class="pe-3 py-2">Prix: <span class="text-muted">{{ (voiture.prix/100) }} €</span></h5>
+
+                            <img class="w-98" src="/uploads/{{ voiture.image }}" alt="image de la voiture">
+                            <div class="d-flex justify-content-between rounded">
+                                <h5 class="">kilomètres: <span class="text-muted">{{ voiture.kilometre }} km</span></h5>
+                                <h5 class="">Prix: <span class="text-muted">{{ (voiture.prix/100) }} €</span></h5>
                             </div>
                         </div>
-                        <a href="{{ path('app_gallerie_photos', {'voiture_id': voiture.id}) }}" class="btn btn-primary mt-1" data-bs-toggle="modal">Plus d'informations</a>
+            
                     </div>
 
                         {% for gallerieImage in gallerieImages %}
@@ -30,14 +31,14 @@
                                 <div class="col-md-5 mt-4">
                                     <h5 class="text-center" >Photos</h5>
                                     <div class=" d-flex justify-content-center">
-                                        <img class="zoom-image mb-2 w-25 rounded-3" src="/uploads/{{ gallerieImage.img1 }}" alt="image de la voiture">
-                                        <img class="zoom-image mb-2 ps-2 w-25 rounded-3" src="/uploads/{{ gallerieImage.img2 }}" alt="image de la voiture">
-                                        <img class="zoom-image mb-2 ps-2 w-25 rounded-3" src="/uploads/{{ gallerieImage.img3 }}" alt="image de la voiture">
+                                        <img class="zoom-image mb-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img1 }}" alt="image de la voiture">
+                                        <img class="zoom-image mb-2 ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img2 }}" alt="image de la voiture">
+                                        <img class="zoom-image mb-2 ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img3 }}" alt="image de la voiture">
                                     </div>
                                     <div class="d-flex justify-content-center">
-                                        <img class="zoom-image w-25 rounded-3" src="/uploads/{{ gallerieImage.img4 }}" alt="image de la voiture">
-                                        <img class="zoom-image ps-2 w-25 rounded-3" src="/uploads/{{ gallerieImage.img5 }}" alt="image de la voiture">
-                                        <img class="zoom-image ps-2 w-25 rounded-3" src="/uploads/{{ gallerieImage.img6 }}" alt="image de la voiture">
+                                        <img class="zoom-image w-30 rounded-3" src="/uploads/{{ gallerieImage.img4 }}" alt="image de la voiture">
+                                        <img class="zoom-image ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img5 }}" alt="image de la voiture">
+                                        <img class="zoom-image ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img6 }}" alt="image de la voiture">
                                     </div>
                                 </div>
                            {% endif %}
@@ -45,7 +46,7 @@
                         
                         <div class="col-md-3">
                             <div class="characteristic-box">
-                                <h3 class="text-center my-auto" style="background-color: #ffffff; color: #000000;">Caractéristiques</h3>
+                                <h3 class="text-center" style="background-color: #ffffff; color: #000000;">Caractéristiques</h3>
                                 <div class="row">
                                     <div class="col-sm-6 my-3 px-4">
                                         <h4>Équipements</h4>
@@ -78,8 +79,6 @@
         {% endfor %}
     </div>  
     
-    
-
     <hr class="custom-line"><hr class="custom-line">
     <div class="text-center my-5">
          <div class="h4-title rounded d-inline-block pl-2 pt-2 custom-width">
@@ -98,7 +97,7 @@
             bouton.addEventListener("click", function (event) {
             event.preventDefault(); // Empêcher le comportement par défaut du lien
 
-            // Sélectionner l'élément de la photo de gauche correspondant au bouton cliqué
+            // Sélectionner l'élément de la photo 
             var voitureImage = bouton.parentNode.querySelector(".voiture-item img");
 
             // Créer un élément de texte
@@ -123,9 +122,9 @@
         <div class="row justify-content-center mt-4 ">
             <div class="col-lg-7 mx-auto">
               <div class="card">
-                <div class="card-body bg-success">
+                <div class="card-color card-body">
                   <div class="mt-4 pt-2">
-                    <h3 class="align-center mb-0 display-4 text-center"><strong>Contactez-nous</strong></h3>
+                    <h3 class="align-center mb-0 display-4 text-center bg-light"><strong>Contactez-nous</strong></h3>
                   </div>
                     <form method="POST" action="{{ path('contactClients') }}" class=" mx-auto" data-form-title="Form Name">
                       <input type="hidden" name="email" data-form-email="true" value="">
@@ -134,10 +133,10 @@
                           <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12"></div>
                       </div>
                       <div class="row">
-                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto">
-                            <p class="align-left mb-4 text-center">
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto my-2">
+                            <h6 class="bg-light align-left mb-4 text-center">
                                 ( Un membre de notre équipe vous recontactera. )
-                            </p>
+                            </h6>
                         </div>
 
                         <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="select">

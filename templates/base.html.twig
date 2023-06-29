@@ -16,27 +16,27 @@
         {% include "security/_nav.html.twig" %}
     </header>
 
+    <main>
+        {% block body %}{% endblock %}
+        {% block content %}{% endblock %}
 
-    {% block body %}{% endblock %}
-    {% block content %}{% endblock %}
-
-    
-    {% block presentation %}{% endblock %}
-    {% block caroussel %}
-    {% endblock %}
-
-   {% block gallery %}{% endblock %}
-
-   {% block venteVehicules %}{% endblock %}
-
-   {% block avisClients %}{% endblock %}
-
-   {% block formulaireClients %}{% endblock %}
-
-
-    <footer class="my-5">
-        {% include "security/_footer.html.twig" %}
         
+        {% block presentation %}{% endblock %}
+        {% block caroussel %}
+        {% endblock %}
+
+        {% block gallery %}{% endblock %}
+
+        {% block venteVehicules %}{% endblock %}
+
+        {% block avisClients %}{% endblock %}
+
+        {% block formulaireClients %}{% endblock %}
+    </main>
+
+
+    <footer class="mt-5 pb-0">
+         {{ render(controller('App\\Controller\\BaseController::renderFooter')) }}
     </footer>   
 
 

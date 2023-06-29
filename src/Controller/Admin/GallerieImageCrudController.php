@@ -21,7 +21,9 @@ class GallerieImageCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('une gallerie')
             ->setEntityLabelInSingular('une gallerie de photos')
             ->setPageTitle('index', 'Liste des galleries de photos pour vente de véhicules')
-            ->setPaginatorPageSize(10);
+            ->setPaginatorPageSize(10)
+            ->showEntityActionsInlined();
+
     }
 
     

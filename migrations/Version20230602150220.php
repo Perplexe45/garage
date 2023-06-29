@@ -30,7 +30,6 @@ final class Version20230602150220 extends AbstractMigration
         $this->addSql('ALTER TABLE avis ADD CONSTRAINT FK_8F91ABF0CC1F4FA8 FOREIGN KEY (idemploye_id) REFERENCES employe (id)');
         $this->addSql('ALTER TABLE contact ADD CONSTRAINT FK_4C62E638CC1F4FA8 FOREIGN KEY (idemploye_id) REFERENCES employe (id)');
         $this->addSql('ALTER TABLE description ADD CONSTRAINT FK_6DE4402620F5B4DC FOREIGN KEY (idservice_id) REFERENCES service (id)');
-        $this->addSql('ALTER TABLE horaire ADD CONSTRAINT FK_BBC83DB6CC1F4FA8 FOREIGN KEY (idemploye_id) REFERENCES employe (id)');
         $this->addSql('ALTER TABLE service ADD CONSTRAINT FK_E19D9AD2CC1F4FA8 FOREIGN KEY (idemploye_id) REFERENCES employe (id)');
     }
 

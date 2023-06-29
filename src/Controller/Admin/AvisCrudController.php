@@ -24,7 +24,8 @@ class AvisCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Liste des avis du garage Perrot')
             ->setEntityLabelInSingular('1 avis')
             ->setPageTitle('index', 'Liste des avis du garage')
-            ->setPaginatorPageSize(10);
+            ->setPaginatorPageSize(10)
+            ->showEntityActionsInlined();
     }
 
     

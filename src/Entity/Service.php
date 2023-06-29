@@ -28,10 +28,14 @@ class Service
     #[ORM\OneToMany(mappedBy: 'IDservice', targetEntity: Realiser::class)]
     private Collection $realisers;
 
+    #[ORM\OneToMany(mappedBy: 'IDservice', targetEntity: Evocation::class)]
+    private Collection $evocations;
+
     public function __construct()
     {
         $this->descriptions = new ArrayCollection();
         $this->realisers = new ArrayCollection();
+        $this->evocations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,6 +74,12 @@ class Service
     {
         return $this->descriptions;
     }
+
+    public function __toString()   
+    {
+        return $this->getNom();
+    }
+
 
     public function addDescription(Description $description): self
     {
@@ -117,6 +127,36 @@ class Service
             // set the owning side to null (unless already changed)
             if ($realiser->getIDservice() === $this) {
                 $realiser->setIDservice(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evocation>
+     */
+    public function getEvocations(): Collection
+    {
+        return $this->evocations;
+    }
+
+    public function addEvocation(Evocation $evocation): self
+    {
+        if (!$this->evocations->contains($evocation)) {
+            $this->evocations->add($evocation);
+            $evocation->setIDservice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvocation(Evocation $evocation): self
+    {
+        if ($this->evocations->removeElement($evocation)) {
+            // set the owning side to null (unless already changed)
+            if ($evocation->getIDservice() === $this) {
+                $evocation->setIDservice(null);
             }
         }
 

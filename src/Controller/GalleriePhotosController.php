@@ -15,6 +15,7 @@ use App\Repository\OptionVoitureRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class GalleriePhotosController extends AbstractController
 {
@@ -45,4 +46,12 @@ class GalleriePhotosController extends AbstractController
         'optionsVoiture' => $optionVoitures,    
         ]);
     }
+    public function configureCrud (Crud $crud) : Crud
+    {
+        return $crud
+            ->setPaginatorPageSize(20)
+            ->showEntityActionsInlined();
+    }
+
+    
 }

@@ -26,18 +26,20 @@ class ContactCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Contacts')
             ->setEntityLabelInSingular('contact')
             ->setPageTitle('index', 'Liste des contacts du garage')
-            ->setPaginatorPageSize(15);
+            ->setPaginatorPageSize(15)
+            ->showEntityActionsInlined();
     }
 
     
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('IDvoiture')->setLabel('Référence de l\'annonce (Si intérêt pour achat d\'une voiture)'),
+            AssociationField::new('IDvoiture')->setLabel('Référence de l\'annonce'),
             TextField::new('nom'),
             TextField::new('prenom'),
             EmailField::new('email'),
-            TelephoneField::new('telephone'),
+            TelephoneField::new('telephone')
+                ,
             TextareaField::new('message'),
             AssociationField::new('IDemploye')->setLabel('Gérer par')
         ];

@@ -30,7 +30,8 @@ class DashboardEmployeController extends AbstractDashboardController
         $this->entityManager = $entityManager;
     }
 
-    #[IsGranted('ROLE_USER')]
+
+    #[IsGranted('ROLE_USER')] 
     #[Route('/admin/employe', name: 'app_employe')]
     public function index(): Response
     {
@@ -53,8 +54,9 @@ class DashboardEmployeController extends AbstractDashboardController
             ->setSubItems([
                 MenuItem::linkToCrud('Voitures en vente', 'fa-solid fa-car', Voiture::class),
                 MenuItem::linkToCrud('Gallery d\'images', 'fa-solid fa-image', GallerieImage::class),
-                MenuItem::linkToUrl('Ajout options', 'fa-solid fa-bars', 'options_voiture'),
-                MenuItem::linkToCrud('Ajout équipements', 'fa-solid fa-gear', EquipementVoiture::class)
+                //MenuItem::linkToUrl('Ajout options', 'fa-solid fa-bars', 'options_voiture'),
+                MenuItem::linkToCrud('Ajout équipements', 'fa-solid fa-gear', EquipementVoiture::class),
+                MenuItem::linkToCrud('Ajout d\'options', 'fa-solid fa-gear', OptionVoiture::class)
             ]);
 
         yield MenuItem::subMenu('Customisation', 'fa-solid fa-car')

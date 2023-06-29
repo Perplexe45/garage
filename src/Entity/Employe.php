@@ -53,8 +53,7 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Contact::class)]
     private Collection $contacts;
 
-    #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Horaire::class)]
-    private Collection $horaires;
+    
 
     #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Service::class)]
     private Collection $services;
@@ -67,11 +66,13 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        /* $this->roles = ['ROLE_USER']; */
         $this->contacts = new ArrayCollection();
-        $this->horaires = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->voitures = new ArrayCollection();
+        $this->infoSpeciales = new ArrayCollection();
+        $this->horaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +90,27 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $confirmPassword = null;
+
+    #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: InfoSpeciale::class)]
+    private Collection $infoSpeciales;
+
+    #[ORM\OneToMany(mappedBy: 'IDemploye', targetEntity: Horaire::class)]
+    private Collection $horaires;
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+    
+    public function setConfirmPassword(?string $confirmPassword): void
+    {
+        $this->confirmPassword = $confirmPassword;
     }
 
     /**
@@ -123,14 +145,20 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        /* $this->password = $password; */
+        /* this->password = password_hash($password, PASSWORD_BCRYPT); */
+        $options = [
+            'cost' => 13,
+        ];
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT, $options);
+        $this->password = $hashedPassword;
 
         return $this;
     }
@@ -264,36 +292,6 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Horaire>
-     */
-    public function getHoraires(): Collection
-    {
-        return $this->horaires;
-    }
-
-    public function addHoraire(Horaire $horaire): self
-    {
-        if (!$this->horaires->contains($horaire)) {
-            $this->horaires->add($horaire);
-            $horaire->setIDemploye($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHoraire(Horaire $horaire): self
-    {
-        if ($this->horaires->removeElement($horaire)) {
-            // set the owning side to null (unless already changed)
-            if ($horaire->getIDemploye() === $this) {
-                $horaire->setIDemploye(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Service>
      */
     public function getServices(): Collection
@@ -377,6 +375,66 @@ class Employe implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($voiture->getIDemploye() === $this) {
                 $voiture->setIDemploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, InfoSpeciale>
+     */
+    public function getInfoSpeciales(): Collection
+    {
+        return $this->infoSpeciales;
+    }
+
+    public function addInfoSpeciale(InfoSpeciale $infoSpeciale): self
+    {
+        if (!$this->infoSpeciales->contains($infoSpeciale)) {
+            $this->infoSpeciales->add($infoSpeciale);
+            $infoSpeciale->setIDemploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfoSpeciale(InfoSpeciale $infoSpeciale): self
+    {
+        if ($this->infoSpeciales->removeElement($infoSpeciale)) {
+            // set the owning side to null (unless already changed)
+            if ($infoSpeciale->getIDemploye() === $this) {
+                $infoSpeciale->setIDemploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Horaire>
+     */
+    public function getHoraires(): Collection
+    {
+        return $this->horaires;
+    }
+
+    public function addHoraire(Horaire $horaire): self
+    {
+        if (!$this->horaires->contains($horaire)) {
+            $this->horaires->add($horaire);
+            $horaire->setIDemploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHoraire(Horaire $horaire): self
+    {
+        if ($this->horaires->removeElement($horaire)) {
+            // set the owning side to null (unless already changed)
+            if ($horaire->getIDemploye() === $this) {
+                $horaire->setIDemploye(null);
             }
         }
 

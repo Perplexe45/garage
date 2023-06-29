@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
-use App\Entity\Employe;
 use App\Entity\Contact;
+use App\Entity\Employe;
+use App\Entity\Evocation;
+use App\Entity\Horaire;
+use App\Entity\Service;
 use App\Entity\OptionVoiture;
-use App\Entity\Voiture;
+use App\Repository\HoraireRepository;
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +28,20 @@ class HomeController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function index(): Response
+    public function index(HoraireRepository $horaireRepository): Response
     {
         // Récupérer les témoignages depuis l'entité témoignage
         $temoignages = $this->entityManager->getRepository(Avis::class)->findAll();
         $OptionVoiture = $this->entityManager->getRepository(OptionVoiture::class)->find(2);
+        $service = $this->entityManager->getRepository(Service::class)->findAll();
+        $evocation = $this->entityManager->getRepository(Evocation::class);
+        $horaire_footer = $horaireRepository->findAll(); // Utilisez le repository pour récupérer tous les horaires
+        
         return $this->render('home.html.twig',[
-            'temoignages' => $temoignages,
-            'OptionVoiture'=>$OptionVoiture
+            'temoignages'=>$temoignages,
+            'OptionVoiture'=>$OptionVoiture,
+            'services'=>$service,
+            'evocations'=>$evocation,   
         ]);
     }
 
@@ -79,7 +88,6 @@ class HomeController extends AbstractController
         $contact->setEmail($email);
         $contact->setTelephone($phone);
         $contact->setMessage($message);
-        /* $contact->setIDemploye($entityManager->getRepository(Employe::class)->find(1)); */
 
         ///////////Recherche de l'identif de la voiture dans l'entité Voiture////////////
         $valeurSelect = $request->request->get('selectId');//Recup le nom de la ligne du select du form
@@ -92,6 +100,7 @@ class HomeController extends AbstractController
         $entityManager->persist($contact);
         $entityManager->flush();
         $this->addFlash('notice', 'Merci de votre contact, nous vous répondrons dans les plus brefs délais');
+        
         // Redirection de l'utilisateur vers la page d'accueil
         return $this->redirectToRoute('home');
     }
