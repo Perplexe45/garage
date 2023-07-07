@@ -8,6 +8,8 @@ use App\Entity\Equipement;
 use App\Entity\EquipementVoiture;
 use App\Entity\Voiture;
 use App\Entity\GallerieImage;
+use App\Entity\Marque;
+use App\Entity\Modele;
 use App\Entity\Option;
 use App\Entity\Options;
 use App\Entity\OptionVoiture;
@@ -54,15 +56,17 @@ class DashboardEmployeController extends AbstractDashboardController
             ->setSubItems([
                 MenuItem::linkToCrud('Voitures en vente', 'fa-solid fa-car', Voiture::class),
                 MenuItem::linkToCrud('Gallery d\'images', 'fa-solid fa-image', GallerieImage::class),
-                //MenuItem::linkToUrl('Ajout options', 'fa-solid fa-bars', 'options_voiture'),
-                MenuItem::linkToCrud('Ajout équipements', 'fa-solid fa-gear', EquipementVoiture::class),
-                MenuItem::linkToCrud('Ajout d\'options', 'fa-solid fa-gear', OptionVoiture::class)
+/*                 MenuItem::linkToUrl('Ajout options', 'fa-solid fa-bars', 'options_voiture'), */
+                MenuItem::linkToCrud('Ajout équipements', 'fa-solid fa-bars', EquipementVoiture::class),
+                MenuItem::linkToCrud('Ajout d\'options', 'fa-solid fa-bars', OptionVoiture::class)
             ]);
 
         yield MenuItem::subMenu('Customisation', 'fa-solid fa-car')
             ->setSubItems([
+                MenuItem::linkToCrud('Les Marques', 'fa-solid fa-bars', Marque::class),
+                MenuItem::linkToCrud('Les Modèles', 'fa-solid fa-bars', Modele::class),
                 MenuItem::linkToCrud('Les options', 'fa-solid fa-bars', Options::class),
-                MenuItem::linkToCrud('Les équipements', 'fa-solid fa-gear', Equipement::class)
+                MenuItem::linkToCrud('Les équipements', 'fa-solid fa-bars', Equipement::class)
             ]);
         yield MenuItem::linkToCrud('Avis des clients', 'fa-solid fa-address-book', Avis::class);
         

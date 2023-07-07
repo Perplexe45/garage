@@ -2,127 +2,160 @@
 
 {% block body %}
 
-    <div class="border-title border border-danger bg-light rounded-3" style="background-color: #ffffff; color: #000000;">
+    <div class="container border bg-light" style="background-color: #ffffff; color: #000000;">
         <h1 class="text-center my-5 display-6 style="background-color: #ffffff; color: #000000;"">Nos véhicules actuellement en vente</h1>
     </div>
 
-    <div class="container my-5">
+    <div class="container py-4 bg-light">
         <div class="row">
-        {% for voiture in voitures %}
-            {% if not voiture.vendu %}
-                <div class="row mb-5">
-                    <div class="col-md-4 mb-3">
-                        <div class="voiture-item">
-                            <div class="card d-flex align-items-center justify-content-center">
-                                <h4 class="text-center pt-2">Référence: <span class="reference">{{ voiture.reference }}</span></h4>
-                            </div>
-
-                            <img class="w-98" src="/uploads/{{ voiture.image }}" alt="image de la voiture">
-                            <div class="d-flex justify-content-between rounded">
-                                <h5 class="">kilomètres: <span class="text-muted">{{ voiture.kilometre }} km</span></h5>
-                                <h5 class="">Prix: <span class="text-muted">{{ (voiture.prix/100) }} €</span></h5>
-                            </div>
-                        </div>
-            
+            <div class="col-md-2"><!-- Contenu à gauche pour la recherche -->
+                <div class="rounded sticky-top" style="top: calc(40px);">
+                    <div class="text-center">
+                        <h4 class="text-center">Filtrer</h4>
                     </div>
-
-                        {% for gallerieImage in gallerieImages %}
-                            {% if gallerieImage.voitures.contains(voiture) %}
-                                <div class="col-md-5 mt-4">
-                                    <h5 class="text-center" >Photos</h5>
-                                    <div class=" d-flex justify-content-center">
-                                        <img class="zoom-image mb-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img1 }}" alt="image de la voiture">
-                                        <img class="zoom-image mb-2 ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img2 }}" alt="image de la voiture">
-                                        <img class="zoom-image mb-2 ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img3 }}" alt="image de la voiture">
-                                    </div>
-                                    <div class="d-flex justify-content-center">
-                                        <img class="zoom-image w-30 rounded-3" src="/uploads/{{ gallerieImage.img4 }}" alt="image de la voiture">
-                                        <img class="zoom-image ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img5 }}" alt="image de la voiture">
-                                        <img class="zoom-image ps-2 w-30 rounded-3" src="/uploads/{{ gallerieImage.img6 }}" alt="image de la voiture">
-                                    </div>
-                                </div>
-                           {% endif %}
-                        {% endfor %}
+                    
+                    <div class="d-flex justify-content-center">
+                        {{ form_start(form) }}
                         
-                        <div class="col-md-3">
-                            <div class="characteristic-box">
-                                <h3 class="text-center" style="background-color: #ffffff; color: #000000;">Caractéristiques</h3>
-                                <div class="row">
-                                    <div class="col-sm-6 my-3 px-4">
-                                        <h4>Équipements</h4>
-                                        <ul class="list-unstyled">
-                                            {% for equipementVoiture in equipementsVoiture %}
-                                                {% if equipementVoiture.IDvoiture == voiture %}
-                                                    <li class="small-text">{{ equipementVoiture.IDequipement.getNom() }}</li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
+                        {{ form_row(form.km) }}
+                        {{ form_row(form.selectKm) }}
+
+                        {{ form_row(form.prix) }}
+                        {{ form_row(form.selectPrix) }}
+                      
+                        {{ form_row(form.annee) }}
+                        {{ form_row(form.selectAnnee) }}
+
+                        {{ form_row(form.selectRAZ) }}
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div> 
+            
+            
+            <div class="col-md-10"> 
+                {% for voiture in voitures %}
+                    {% if not voiture.vendu %}
+                        <div class="row mb-5">
+                            <div class="col-md-4 mb-3">
+                                <div class="voiture-item">
+                                    <div class="card d-flex align-items-center justify-content-center">
+                                        <h4 class="text-center pt-2">Référence: <span class="reference">{{ voiture.reference }}</span></h4>
                                     </div>
-                                    <div class="col-sm-6 my-3 px-4">
-                                        <h4>Options</h4>
-                                        <ul class="list-unstyled">
-                                            {% for optionVoiture in optionsVoiture %}
-                                                {% if optionVoiture.IDvoiture == voiture %}
-                                                    <li class="small-text">{{ optionVoiture.IDoptions.getNom() }}</li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
+
+                                    <img class="w-98" src="/uploads/{{ voiture.image }}" alt="image de la voiture">
+                                    <div class="d-flex justify-content-between roudedCadrePhoto ">
+                                        <h5 class="text-center">kilomètres <br><span class="text-muted">{{ voiture.kilometre }} km</span></h5>
+                                        <h5 class="text-center">Prix <br><span class="text-muted">{{ (voiture.prix/100) }} €</span></h5>
+                                        <h5 class="text-center">Année <br><span class="text-muted">{{ (voiture.circulation) }}</span></h5>
                                     </div>
                                 </div>
                             </div>
+
+                            {# ////////////////////////Photos au milieu et en dessous : Caractérisriques //////////////////////#}
+                            {% for gallerieImage in gallerieImages %}
+                                {% if gallerieImage.voitures.contains(voiture) %}
+                                    <div class="col-md-5 mt-0">
+                                        <div class="card d-flex align-items-center justify-content-center my-2">
+                                            <h5 class="text-center pt-2">Marque : <span class="reference">{{ voiture.IDmarque.getNom() }} </span>- Modèle : <span class="reference" >{{ voiture.IDmodele.getNom() }} </span></h5>
+                                        </div>
+                                        
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <img class="zoom-image mb-2 w-30 zoomable-image" src="/uploads/{{ gallerieImage.img1 }}" alt="image de la voiture">
+                                            <img class="zoom-image mb-2 ps-2 w-30 zoomable-image" src="/uploads/{{ gallerieImage.img2 }}" alt="image de la voiture">
+                                            <img class="zoom-image mb-2 ps-2 w-30 zoomable-image" src="/uploads/{{ gallerieImage.img3 }}" alt="image de la voiture">
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <img class="zoom-image w-30 zoomable-image" src="/uploads/{{ gallerieImage.img4 }}" alt="image de la voiture">
+                                            <img class="zoom-image ps-2 w-30 zoomable-image" src="/uploads/{{ gallerieImage.img5 }}" alt="image de la voiture">
+                                            <img class="zoom-image ps-2 w-30 zoomable-image" src="/uploads/{{ gallerieImage.img6 }}" alt="image de la voiture">
+                                        </div>
+
+                                        <div class="roudedCadrePhoto ">
+                                            <h5 class="" ><span class="mx-auto">{{ voiture.caracteristique }} </span></h5>
+                                        </div>
+
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {#///////////////////////////////////Equipements et Options ////////////////////////////////////#}
+                            <div class="col-md-3">
+                                <div class="characteristic-box">
+                                    <h4 class="text-center" style="color: #000000;">Caractéristiques</h4>
+                                    <div class="row">
+                                        <div class="col-sm-6 my-3">
+                                            <div class=" px-3">
+                                            <h6>Équipements</h6>
+                                            </div>
+                                            
+                                            <ul class="">
+                                                {% for equipementVoiture in equipementsVoiture %}
+                                                    {% if equipementVoiture.IDvoiture == voiture %}
+                                                        <li class="small">{{ equipementVoiture.IDequipement }}</li>
+                                                        {# <li class="small">{{ equipementVoiture.IDequipement.getNom() }}</li> #}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6 my-3">
+                                            <div class="px-3">
+                                                <h6>Options</h6>
+                                            </div>
+                                            
+                                            <ul class="">
+                                                {% for optionVoiture in optionsVoiture %}
+                                                    {% if optionVoiture.IDvoiture == voiture %}
+                                                        <li class="small">{{ optionVoiture.IDoptions }}</li>
+                                                        {# <li class="small">{{ optionVoiture.IDoptions.getNom() }}</li> #}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="separation"></div>
+                            
                         </div>
 
-                    <div class="separation"></div>
-                </div>
-                
-             {% endif %}
-        {% endfor %}
-    </div>  
+                    {% endif %}
+                {% endfor %}
+            </div> <!-- Fin de la div col-md-10 -->
+    </div>
+</div>
+
     
-    <hr class="custom-line"><hr class="custom-line">
-    <div class="text-center my-5">
-         <div class="h4-title rounded d-inline-block pl-2 pt-2 custom-width">
-            <h4 class="text-center display-6 my-1">Intérêt pour une de nos voitures</h4>
+    <div class="container text-center py-3 bg-light">
+         <div class="d-inline-block pb-1  rounded-3 ">
+            <h5 class="text-center display-6 h4-title ps-4 pe-4 display-4    ">Intéréssé par une voiture ?</h5>
         </div>
     </div>
 
+   
     <script>
-        // Attendre que le document soit chargé
-        document.addEventListener("DOMContentLoaded", function () {
-        // Sélectionner tous les éléments des boutons
-        var boutons = document.querySelectorAll(".btn-primary");
-
-        // Parcourir tous les boutons et ajouter un écouteur d'événement de clic à chacun
-        boutons.forEach(function (bouton) {
-            bouton.addEventListener("click", function (event) {
-            event.preventDefault(); // Empêcher le comportement par défaut du lien
-
-            // Sélectionner l'élément de la photo 
-            var voitureImage = bouton.parentNode.querySelector(".voiture-item img");
-
-            // Créer un élément de texte
-            var texte = document.createElement("div");
-            texte.innerText = "Votre texte ici";
-
-            // Remplacer la photo par le texte
-            voitureImage.parentNode.replaceChild(texte, voitureImage);
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            var zoomableImages = document.getElementsByClassName('zoomable-image');
+            for (var i = 0; i < zoomableImages.length; i++) {
+                zoomableImages[i].addEventListener('click', function() {
+                    this.classList.toggle('zoomed-image');
+                });
+            }
         });
-        });
-
     </script>
-
 
 
 {% endblock %}
 
 {% block formulaireClients %}
-    <section data-bs-version="5.1" class="my-5">
-      <div class="container">
-        <div class="row justify-content-center mt-4 ">
+    <section data-bs-version="5.1" class="">
+      <div class="container bg-light py-5">
+        <div class="row justify-content-center ">
             <div class="col-lg-7 mx-auto">
               <div class="card">
-                <div class="card-color card-body">
+                <div class="card-body rounded-2 card-color">
                   <div class="mt-4 pt-2">
                     <h3 class="align-center mb-0 display-4 text-center bg-light"><strong>Contactez-nous</strong></h3>
                   </div>
@@ -153,27 +186,28 @@
                         </div>
 
                         <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
-                            <input type="text" name="name" placeholder="Nom" data-form-field="name" class="form-control" value="" id="name-form7-o">
+                            <input type="text" name="name" placeholder="Nom" data-form-field="name" class="form-control" value="" required>
                         </div>
                         <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
-                            <input type="text" name="prenom" placeholder="Prénom" data-form-field="prenom" class="form-control" value="" id="prenom-form7-o">
+                            <input type="text" name="prenom" placeholder="Prénom" data-form-field="prenom" class="form-control" value="" required>
                         </div>
 
                         <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="email">
-                            <input type="email" name="email" placeholder="Adresse Email" data-form-field="email" class="form-control" value="" id="email-form7-o">
+                            <input type="email" name="email" placeholder="Adresse Email" data-form-field="email" class="form-control" value="" required>
                         </div>
                         <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
-                            <input type="tel" name="phone" placeholder="Téléphone" data-form-field="phone" class="form-control" value="" id="phone-form7-o">
+                            <input type="tel" name="phone" placeholder="Téléphone" data-form-field="phone" class="form-control" value="" required>
                         </div>
-                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
-                            <input type="tel" name="message" placeholder="Message" data-form-field="message" class="form-control" value="" id="message-form7-o">
+                        <div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="message">
+                            <input type="tel" name="message" placeholder="Message" data-form-field="message" class="form-control" value="" required style="height: 142px" >
+                           
                         </div>
                         <div class="col-lg-7 mx-auto mbr-section-btn align-center">
-                            <button type="submit" class="btn btn-primary display-4">Envoyer</button>
+                            <button type="submit" class="btn btn-dark display-4">Envoyer</button>
                         </div>
                       </div>
                 </form>
-                </div>
+            </div>
               </div>
               
               
@@ -187,3 +221,4 @@
 
 
 
+    

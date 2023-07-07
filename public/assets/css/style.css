@@ -3,7 +3,7 @@
 }
 
 .navbar-nav .nav-link:hover {
-  background-color: #b8d6e6; /* Couleur de surbrillance */
+  background-color: #EAE0D5; /* Couleur de surbrillance */
 }
 
 body {
@@ -39,30 +39,31 @@ header {
   display: none;
 }
 
-.custom-border {
-  background-color: #F5F5DC; /* Couleur blanc cassé */
-}
-
-.custom-button {
+.btn_form{
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 230px;
-  height: 50px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  border-radius: 30px;
-  margin: 0 auto;
-  margin-top: 20px;
-  cursor: pointer;
-  padding: 5px;
+  justify-content: center;
+  width: 100%; padding: 0;
+  margin-top: 15px; 
+  margin-left: 0px; 
+  text-align: center; 
+  height: 28px;
+  border: solid 1px #22333B;
+  border-radius: 20px;
+  background-color: #22333B;
+  color: #EAE0D5;
+  outline: none;
 }
 
-.custom-button:hover {
-  background-color: #0056b3;
-}
+.btn_form:hover {
+  color: rgb(255, 255, 255);
+  background-color: #000;
+  }   
+
+.btn:hover {
+  color: rgb(255, 255, 255);
+  background-color: #000;
+  } 
 
 .form-select {
   display: inline-block;
@@ -79,8 +80,14 @@ header {
   cursor: pointer;
 }
 
-.footer-dim {
-  font-style: italic;
+.zoomed-image {
+  width: 500px; 
+  height: auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
 }
 
 .characteristic-box {
@@ -144,40 +151,8 @@ header {
 }
 
 .w-30 { /* Photos gallerie */
-  width : 175px;
-  height: 115;
-}
-
-.confirmation-dialog {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.confirmation-dialog-message {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.confirmation-dialog-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.confirmation-dialog-buttons button {
-  margin: 0 10px;
+  width : 15rem;
+  height: 5.5rem;
 }
 
 .form-scroll {
@@ -192,16 +167,16 @@ header {
   padding: 15px;
 }
 
+.roudedCadrePhoto {
+  border: 1px solid #000;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #ded4d4;
+  padding: 15px;
+}
+
 .carderBord {
   background-color: #5E503F;
-}
-
-.confirmation-dialog {
-  display: none;
-}
-
-.confirmation-dialog.show {
-  display: flex;
 }
 
 h1 {
@@ -212,11 +187,6 @@ h1 {
 
 .cursor-pointer {
   cursor:pointer;
-}
-
-.button_hide {
-  visibility: hiden;
-  margin-top: -20px;
 }
 
 .overlay-text { /*Images des services de la page d'accueil*/
@@ -238,16 +208,13 @@ h1 {
   opacity: 1; /* Au survol de l'élément parent, le texte devient visible */
 }
 
-.content {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-}
 
 .box {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
   background-color: #f5f5f5;
   border-radius: 5px;
-  padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -265,21 +232,46 @@ h2 {
   margin-top: 0;
 }
 
+
+
 .card-color {
   background-color: #5E503F;
+
 }
 
 .card {
   background-color: rgb(234, 239, 241);
-  margin: auto
+  margin: auto  
 }
 
-h4 {
-  background: rgb(234, 239, 241);
+.custom-radio input[type="radio"]:checked {
+  outline-style: none; /* Couleur de contour des btn radio*/
+  background-color: #343a40 !important;
+  border: 1px solid #343a40 !important ;
+}
+
+.custom-radio input[type="radio"]:focus,
+.custom-radio input[type="radio"]:active {
+  border: 1px solid #343a40 !important ;
+    outline-style: inherit !important ; /* Supprime le contour lorsqu'en focus ou actif */
+}
+
+.characteristic_car {
+  background-color: #ded4d4;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 1.7rem;
+  margin-right: 1.7rem;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.4;
+  height: 70px;
+  max-height: 10rem;
+  border: solid 1px black;
 }
 
 .h4-title{
-  border: solid 1px lightgreen;
+  border: solid 1px #22333B;
   border-top: 5% !important ;
   background: rgb(234, 239, 241);
   max-width: 900px;
@@ -302,24 +294,48 @@ hr {
   border-top: 1px solid #eee;
 }
 
-.btn {
-  font-weight: 600;
-  border-width: 1px;
-  font-style: normal;
-  margin: 0.6rem 0.6rem;
-  white-space: normal;
-  transition: all 0.2s ease-in-out;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  word-break: break-word;
+/* ///////////////////Twig///////////////////// */
+.sticky-top {
+  position: sticky;
+  margin-top: 1px;
 }
 
+.scrolling-text {
+  position: relative;
+  overflow: hidden;
+}
+
+.scrolling-text_content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll 20s linear infinite alternate;
+}
+
+@keyframes scroll {
+  0% {
+      transform: translateX(100%);
+  }
+  50% {
+      transform: translateX(-50%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+
+/* ////////////////////Footer///////////////////////// */
+.border-footer {
+  border: solid 2px #dce0e1 ;
+
+}
 footer {
   background-color: #22333B;
   padding: 20px;
   }
 
+  .footer-dim {
+    font-style: italic;
+  }
 .garage-hours , .garage-hours h2{
     margin-bottom: 10px;
     color: #EAE0D5;

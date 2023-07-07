@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Employe;
 use App\Entity\Evocation;
 use App\Entity\Horaire;
+use App\Entity\InfoSpeciale;
 use App\Entity\Service;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -33,22 +34,19 @@ class DashboardGerantController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable  
     {
+        yield MenuItem::linktoRoute('Retour sur le site', 'fas fa-home', 'home');
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-
-       /*  yield MenuItem::subMenu('Employés', 'fa-solid fa-boy')
-        ->setSubItems([
-            
-            MenuItem::linkToUrl('Nouvel employé', 'fa-solid fa-bars', 'ajout_employe'),
-            MenuItem::linkToCrud('Employés', 'fas fa-user', Employe::class)
-        ]); */
-
         yield MenuItem::linkToCrud('Employés', 'fas fa-user', Employe::class);
-        yield MenuItem::linkToCrud('Horaires', 'fa-solid fa-clock', Horaire::class);
+        
+        yield MenuItem::subMenu('Horaires', 'fa-solid fa-car')
+            ->setSubItems([
+                MenuItem::linkToCrud('Horaires', 'fa-solid fa-clock', Horaire::class),
+                MenuItem::linkToCrud('Info spécial', 'fa-solid fa-info', InfoSpeciale::class)
+            ]);
         yield MenuItem::subMenu('Services', 'fa-solid fa-car')
             ->setSubItems([
                 MenuItem::linkToCrud('Réparations', 'fa-solid fa-bars', Service::class),
                 MenuItem::linkToCrud('Noms réparations', 'fa-solid fa-gear', Evocation::class)
             ]);
-        
     }
 }

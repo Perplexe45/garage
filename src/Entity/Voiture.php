@@ -15,17 +15,11 @@ class Voiture
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?float $prix = null;
-
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $mise_en_circulation = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $titre_annonce = null;
+    #[ORM\Column(length: 300)]
+    private ?string $caracteristique = null;
 
     #[ORM\Column]
     private ?int $kilometre = null;
@@ -47,12 +41,6 @@ class Voiture
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: OptionVoiture::class)]
     private Collection $optionVoitures;
 
-    #[ORM\ManyToOne(inversedBy: 'voitures')]
-    private ?EquipementVoiture $IDequipement = null;
-
-    #[ORM\ManyToOne(inversedBy: 'voitures')]
-    private ?OptionVoiture $IDoption = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $vendu = null;
 
@@ -61,6 +49,20 @@ class Voiture
 
     #[ORM\OneToMany(mappedBy: 'IDvoiture', targetEntity: Contact::class)]
     private Collection $contacts;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Marque $IDmarque = null;
+
+    #[ORM\ManyToOne(inversedBy: 'voitures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Modele $IDmodele = null;
+
+    #[ORM\Column]
+    private ?int $circulation = null;
+
+    #[ORM\Column]
+    private ?int $prix = null;
 
     public function __construct()
     {
@@ -76,17 +78,7 @@ class Voiture
         return $this->id;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
+   
 
     public function getImage(): ?string
     {
@@ -96,28 +88,16 @@ class Voiture
     public function setImage(string $image): self
     {
         $this->image = $image;
-
+        
         return $this;
     }
 
-    public function getMiseEnCirculation(): ?string
-    {
-        return $this->mise_en_circulation;
-    }
-
-    public function setMiseEnCirculation(string $mise_en_circulation): self
-    {
-        $this->mise_en_circulation = $mise_en_circulation;
-
-        return $this;
-    }
+  
 
     public function __toString()   
     {
         return $this->getReference();
     }
-
-
 
     public function getKilometre(): ?int
     {
@@ -244,30 +224,6 @@ class Voiture
         return $this;
     }
 
-    public function getIDequipement(): ?EquipementVoiture
-    {
-        return $this->IDequipement;
-    }
-
-    public function setIDequipement(?EquipementVoiture $IDequipement): self
-    {
-        $this->IDequipement = $IDequipement;
-
-        return $this;
-    }
-
-    public function getIDoption(): ?OptionVoiture
-    {
-        return $this->IDoption;
-    }
-
-    public function setIDoption(?OptionVoiture $IDoption): self
-    {
-        $this->IDoption = $IDoption;
-
-        return $this;
-    }
-
     public function isVendu(): ?bool
     {
         return $this->vendu;
@@ -292,14 +248,14 @@ class Voiture
         return $this;
     }
 
-    public function getTitre_annonce(): ?string
+    public function getCaracteristique(): ?string
     {
-        return $this->titre_annonce;
+        return $this->caracteristique;
     }
 
-    public function setTitre_annonce(string $titre_annonce): self
+    public function setCaracteristique(string $caracteristique): self
     {
-        $this->titre_annonce = $titre_annonce;
+        $this->caracteristique = $caracteristique;
 
         return $this;
     }
@@ -330,6 +286,54 @@ class Voiture
                 $contact->setIDvoiture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIDmarque(): ?Marque
+    {
+        return $this->IDmarque;
+    }
+
+    public function setIDmarque(?Marque $IDmarque): self
+    {
+        $this->IDmarque = $IDmarque;
+
+        return $this;
+    }
+
+    public function getIDmodele(): ?Modele
+    {
+        return $this->IDmodele;
+    }
+
+    public function setIDmodele(?Modele $IDmodele): self
+    {
+        $this->IDmodele = $IDmodele;
+
+        return $this;
+    }
+
+    public function getCirculation(): ?int
+    {
+        return $this->circulation;
+    }
+
+    public function setCirculation(int $circulation): self
+    {
+        $this->circulation = $circulation;
+
+        return $this;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): self
+    {
+        $this->prix = $prix;
 
         return $this;
     }

@@ -1,43 +1,44 @@
-<!-- _footer.html.twig -->
+      <div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="garage-hours border-black border p-2">
+            {% if horaires %}
+                <div class="row d-flex align-items-center justify-content-center">
+                    <h2 class="text-center py-2">Horaires du garage</h2>
+                    <div class="col-lg-5 pt-2">
+                        <ul>
+                            {% for i in range(0, 2) %}
+                                <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-lg-5 pt-2">
+                        <ul>
+                            {% for i in range(3, 5) %}
+                                <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
+                            {% endfor %}
+                            <li class="footer-dim">{{ horaires[6].getJourSemaine }} : {{ horaires[6].getCaracteristique }}</li>
 
-  
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="garage-hours">
-                {% if horaires %}
-                     <div class="row">
-                    <h2 class="text-center py-2" >Horaires du garage</h2>
-                        <div class="col-lg-5 pt-2">
-                            <ul>
-                                {% for i in range(0, 2) %}
-                                    <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="col-lg-5 pt-2">
-                            <ul>
-                                {% for i in range(3, 5) %}
-                                    <li>{{ horaires[i].getJourSemaine }} : {{ horaires[i].getCaracteristique }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6" >
-                            <ul>
-                                <li class="footer-dim">{{ horaires[6].getJourSemaine }} : {{ horaires[6].getCaracteristique }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div>
-                <p>Adresse : 123 Rue Fictive, Ville Imaginaire, Pays Bidon</p>
-            </div>
+                </div>
+               
+                    
+               
+            {% endif %}
         </div>
     </div>
+    <div class="col-lg-6">
+    <div class="garage-hours border-black border p-2">
+        <div>
+            <h2 class="text-center pt-2 pb-3"  > Coordonnées du garage Parrot</h2>
+            <h6><i class="ps-2 fas fa-envelope"> : </i> 23 Rue des bois - Quartier Saint-Michel - 31400 - Toulouse</h6>
+            <h6><i class="ps-2 fas fa-phone"> : </i> 05.34.98.67.54</h6>
+            <h6><i class="ps-2 fas fa-envelope"> : </i> garage_parrot@orange.fr</h6>
+        </div>
+    </div>
+        
+    </div>
 </div>
+
 
 

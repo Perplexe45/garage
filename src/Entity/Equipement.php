@@ -43,6 +43,12 @@ class Equipement
         return $this;
     }
 
+    public function __toString()    //Il faut renvoyer un "get' ou la propriété déclaré est un "String", mais un 'get gégnéré dans la classe 'Equipement'
+    {
+        return $this->getNom();
+    }
+
+
     /**
      * @return Collection<int, EquipementVoiture>
      */

@@ -22,8 +22,7 @@
 
         
         {% block presentation %}{% endblock %}
-        {% block caroussel %}
-        {% endblock %}
+        {% block caroussel %}{% endblock %}
 
         {% block gallery %}{% endblock %}
 
@@ -35,7 +34,7 @@
     </main>
 
 
-    <footer class="mt-5 pb-0">
+    <footer class="pb-0">
          {{ render(controller('App\\Controller\\BaseController::renderFooter')) }}
     </footer>   
 

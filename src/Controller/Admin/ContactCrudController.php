@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-
+    
 use App\Entity\Contact;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -31,20 +31,22 @@ class ContactCrudController extends AbstractCrudController
     }
 
     
-    public function configureFields(string $pageName): iterable
-    {
-        return [
-            AssociationField::new('IDvoiture')->setLabel('Référence de l\'annonce'),
-            TextField::new('nom'),
-            TextField::new('prenom'),
-            EmailField::new('email'),
-            TelephoneField::new('telephone')
-                ,
-            TextareaField::new('message'),
-            AssociationField::new('IDemploye')->setLabel('Gérer par')
-        ];
-    }
-
-
-   
+        public function configureFields(string $pageName): iterable
+        {
+            return [
+                AssociationField::new('IDvoiture')
+                    ->setLabel('Référence de l\'annonce')
+                    ->setRequired(false),
+                TextField::new('nom'),
+                TextField::new('prenom'),
+                EmailField::new('email'),
+                TelephoneField::new('telephone'),
+                TextareaField::new('message')
+                    ->setFormTypeOption('attr', ['class' => 'form-control', 'placeholder' => 'Votre message'])
+                    ->setMaxLength(500),
+                AssociationField::new('IDemploye')
+                    ->setLabel('Gérer par')
+                    ->setRequired(false)
+            ];
+        }   
 }

@@ -3,6 +3,11 @@
   <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <title>optionVoitures</title>
+  <style>
+    /* Votre code CSS existant */
+
+    
+  </style>
 </head>
 
 <div class="custom-dashboard-content">
@@ -12,128 +17,116 @@
   </h1>  
 
   <div class="container">
-
-   {# Récupération des lignes sélectionnées #}
-{% set selectedEquipements = app.request.request.get('selectedEquipements') ?: [] %}
-{% set selectedOptions = app.request.request.get('selectedOptions') ?: [] %}
-
     <form method="post" action="{{ path('options_voiture_submit') }}">
-
-      <!-- Ajout d'un champ caché pour stocker les éléments sélectionnés -->
-      <input type="hidden" id="selectedOptionsInput" name="selectedOptions" value="{{ selectedOptions|join(',') }}">
-      <input type="hidden" id="selectedEquipementsInput" name="selectedEquipements" value="{{ selectedEquipements|join(',') }}">
-      
       <div class="form-group d-flex justify-content-center align-items-center my-5 py-5">
         <label class="ps-4 fs-5 fw-bold" for="voiture" class="label-left">Sélection :</label>
-        <select class="form-select ms-2" id="voiture" name="voiture" data-selected-option="" onchange="handleSelectChange()">
+        <select class="form-select ms-2" id="voiture" name="voiture" data-selected-option="">
           <option value="">Référence de la voiture</option>
           {% for voiture in voitures %}
             <option value="{{ voiture.id }}">{{ voiture.reference }}</option>
           {% endfor %}
         </select>
       </div>
-
+    
       <div class="row">
         <div class="col-2"></div>
         <div class="col-4 mb-4">
           <h2>Options</h2>
           <ul class="list-group">
             {% for option in options %}
-              <li class="list-group-item cursor-pointer option-item {% if option.id in selectedOptions %}selected{% endif %}" data-id="{{ option.id }}" data-selected-options="{{ option.selectedOptions }}">{{ option.nom }}</li>
+              <li class="list-group-item option-item" data-id="{{ option.id }}">{{ option.nom }}</li>
             {% endfor %}
           </ul>
         </div>
-
         <div class="col-1"></div>
-        <div class="col-4 mb-4">  
-          <h2>Équipements</h2>
-          <ul class="list-group">
-            {% for equipement in equipements %}
-              <li class="list-group-item cursor-pointer equipement-item {% if equipement.id in selectedEquipements %}selected{% endif %}" data-id="{{ equipement.id }}" data-selected-equipements="{{ equipement.selectedEquipements }}">{{ equipement.nom }}</li>
-            {% endfor %}
-          </ul>
+          <div class="col-4 mb-4">
+            <h2>Équipements</h2>
+            <ul class="list-group">
+              {% for equipement in equipements %}
+                <li class="list-group-item cursor-pointer equipement-item" data-id="{{ equipement.id }}">{{ equipement.nom }}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
-      </div>
 
       <div class="text-center my-5">
-        <button class="custom-button" type="submit">Valider ces options</button>
+        <button class="custom-button" onclick="showConfirmationDialog()">Valider ces options</button>
       </div>
-
     </form>
-  </div>  
+
+    <!-- Boîte de confirmation -->
+    <div class="confirmation-dialog" id="confirmationDialog">
+      <div class="confirmation-dialog-message">
+        <p>Êtes-vous sûr de vouloir valider ces options ?</p>
+        <div class="confirmation-dialog-buttons">
+          <button onclick="confirmAction()">Oui</button>
+          <button onclick="cancelAction()">Non</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  var selectedEquipements = [];
-  var selectedOptions = [];
+  ///////////////////////Gestion des 2 tableaux///////////////////////
+  // Code JavaScript pour gérer la sélection des éléments
+  const optionItems = document.querySelectorAll('.option-item');
+  const equipementItems = document.querySelectorAll('.equipement-item');
 
-  // Fonction pour gérer la sélection des éléments
-  function handleItemSelection() {
-    // Gestion de la sélection des éléments
+  optionItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('selected');
+    });
+  });
+
+  equipementItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('selected');
+    });
+  });
+
+  ////////////////////////Bouton sur Accepter les options///////////////////
+  // Fonction pour afficher la boîte de confirmation
+   function resetSelection() {
     const optionItems = document.querySelectorAll('.option-item');
     const equipementItems = document.querySelectorAll('.equipement-item');
 
     optionItems.forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('selected');
-        updateSelectedOptions();
-      });
+      item.classList.remove('selected');
     });
 
     equipementItems.forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('selected');
-        updateSelectedEquipements();
-      });
+      item.classList.remove('selected');
     });
   }
 
-    equipementItems.forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('selected');
-        updateSelectedEquipements();
-      });
-    });
-
-    // Fonction pour mettre à jour les équipements sélectionnés
-    function updateSelectedEquipements() {
-      selectedEquipements = [];
-      const selectedEquipementItems = document.querySelectorAll('.equipement-item.selected');
-      selectedEquipementItems.forEach(item => {
-        selectedEquipements.push(item.dataset.id);
-      });
-    }
-
-    // Fonction pour mettre à jour les options sélectionnées
-    function updateSelectedOptions() {
-      selectedOptions = [];
-      const selectedOptionItems = document.querySelectorAll('.option-item.selected');
-      selectedOptionItems.forEach(item => {
-        selectedOptions.push(item.dataset.id);
-      });
-    }
-    
-    function resetSelection() {
-      const optionItems = document.querySelectorAll('.option-item');
-      const equipementItems = document.querySelectorAll('.equipement-item');
-
-      optionItems.forEach(item => {
-        item.classList.remove('selected');
-      });
-
-      equipementItems.forEach(item => {
-        item.classList.remove('selected');
-      });
+  function showConfirmationDialog() {
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'flex';
   }
 
-  function handleSelectChange() {
+  // Fonction pour confirmer l'action
+  function confirmAction() {
+    // Ajoutez ici le code pour traiter la validation des options
+    alert("Options validées !");
+
+    // Réinitialiser les lignes sélectionnées
+    resetSelection();
+
+    // Masquer la boîte de confirmation
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'none';
+  }
+
+  // Fonction pour gérer le changement de ligne dans le select
+function handleSelectChange() {
   const selectElement = document.getElementById('voiture');
 
   // Vérifier si une option est sélectionnée et que sa valeur a changé
   if (selectElement.value !== '' && selectElement.value !== selectElement.dataset.selectedOption) {
     selectElement.dataset.selectedOption = selectElement.value; // Mettre à jour la valeur sélectionnée
 
-     resetSelection();  
+     resetSelection();
   }
 }
 
@@ -141,65 +134,15 @@
   const selectElement = document.getElementById('voiture');
   selectElement.addEventListener('change', handleSelectChange);
 
-  // Fonction pour récupérer les éléments sélectionnés des tableaux
-  function getSelectedElements() {
-    const optionsSelectionnees = [];
-    const equipementsSelectionnes = [];
+  // Fonction pour annuler l'action
+  function cancelAction() {
+    // Réinitialiser les lignes sélectionnées
+    resetSelection();
 
-    const optionItems = document.querySelectorAll('.option-item');
-    const equipementItems = document.querySelectorAll('.equipement-item');
-
-    optionItems.forEach(item => {
-      if (item.classList.contains('selected')) {
-        optionsSelectionnees.push(item.dataset.id);
-      }
-    });
-
-    equipementItems.forEach(item => {
-      if (item.classList.contains('selected')) {
-        equipementsSelectionnes.push(item.dataset.id);
-      }
-    });
-
-    return {
-      optionsSelectionnees: optionsSelectionnees,
-      equipementsSelectionnes: equipementsSelectionnes
-    };
+    // Masquer la boîte de confirmation
+    const confirmationDialog = document.getElementById('confirmationDialog');
+    confirmationDialog.style.display = 'none';
   }
-
-  // Fonction pour traiter le formulaire
-  function processForm() {
-    // Envoyer le formulaire
-    const formElement = document.querySelector('form');
-    formElement.submit();
-    event.preventDefault(); // Empêcher la soumission du formulaire par défaut
-
-    // Envoyer les données au contrôleur Symfony
-    fetch('/admin/options_voiture', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        selectedOptions: selectedOptions,
-        selectedEquipements: selectedEquipements,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Traitez la réponse du contrôleur ici
-        console.log(data);
-      })
-      .catch(error => {
-        // Gérez les erreurs ici
-        console.error(error);
-      });
-  }
-
-  // Appeler la fonction pour gérer la sélection des éléments
-handleItemSelection();
 </script>
-
 {% endblock %}
-
 

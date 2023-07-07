@@ -6,11 +6,10 @@ use App\Entity\Avis;
 use App\Entity\Contact;
 use App\Entity\Employe;
 use App\Entity\Evocation;
-use App\Entity\Horaire;
 use App\Entity\Service;
 use App\Entity\OptionVoiture;
-use App\Repository\HoraireRepository;
 use App\Repository\VoitureRepository;
+use App\Repository\InfoSpecialeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,30 +17,34 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
+
 class HomeController extends AbstractController
 {
     private $entityManager;
+    private $infoSpecialRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, InfoSpecialeRepository $infoSpecialeRepository)
     {
         $this->entityManager = $entityManager;
+        $this->infoSpecialRepository = $infoSpecialeRepository;
     }
 
     #[Route('/', name: 'home')]
-    public function index(HoraireRepository $horaireRepository): Response
+    public function index(): Response
     {
         // Récupérer les témoignages depuis l'entité témoignage
         $temoignages = $this->entityManager->getRepository(Avis::class)->findAll();
         $OptionVoiture = $this->entityManager->getRepository(OptionVoiture::class)->find(2);
         $service = $this->entityManager->getRepository(Service::class)->findAll();
         $evocation = $this->entityManager->getRepository(Evocation::class);
-        $horaire_footer = $horaireRepository->findAll(); // Utilisez le repository pour récupérer tous les horaires
+        $info = $this->infoSpecialRepository->findAll();
         
         return $this->render('home.html.twig',[
             'temoignages'=>$temoignages,
             'OptionVoiture'=>$OptionVoiture,
             'services'=>$service,
             'evocations'=>$evocation,   
+            'infoSpecial' => $info
         ]);
     }
 
@@ -99,7 +102,7 @@ class HomeController extends AbstractController
 
         $entityManager->persist($contact);
         $entityManager->flush();
-        $this->addFlash('notice', 'Merci de votre contact, nous vous répondrons dans les plus brefs délais');
+       
         
         // Redirection de l'utilisateur vers la page d'accueil
         return $this->redirectToRoute('home');

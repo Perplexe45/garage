@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Voiture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,45 @@ class VoitureRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findByCriteria($kmValue, $prixValue, $anneeValue): array
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+    
+        if ($kmValue !== null) {
+            $queryBuilder
+                ->andWhere('v.kilometre < :kmValue')
+                ->setParameter('kmValue', $kmValue)
+                ->OrderBy('v.kilometre', 'ASC');
+        }
+
+        if ($prixValue !== null) {
+            $queryBuilder
+                ->andWhere('v.prix < :prixValue')
+                ->setParameter('prixValue', $prixValue)
+                ->OrderBy('v.prix', 'ASC');           
+        }
+    
+        if ($anneeValue !== null) {
+            $queryBuilder
+                ->andWhere('v.circulation > :anneeValue')
+                ->setParameter('anneeValue', $anneeValue)
+                ->OrderBy('v.circulation', 'DESC');  
+        }
+    
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
+    }
+
+    /* $test = $queryBuilder-> getQuery() ->getResult();
+
+    var_dump($kmValue);
+    var_dump($prixValue);
+    var_dump($anneeValue);
+
+    dd($test); */
+
 
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects

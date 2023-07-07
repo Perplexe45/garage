@@ -7,38 +7,46 @@
 {% block presentation %}
 	<header>
 		<div class="">
-			<h1 class="display-4 bg-light" mbr-fonts-style align-center>Bienvenue cher client</h1>
+			<h1 class="display-4 bg-light">Bienvenue cher client</h1>
 		</div>
-
 	</header>
-	<section>
-		<div class="content">
-			<div class="box">
-				<h2>Depuis 15 ans, notre garage a su gagner votre confiance et vos sourires.</h2>
-				<p>En effet, nous avons des services de qualité, une expertise inégalée et une équipe dévouée
-										        grace à nos techniciens qui font tout pour vous apporter une entière satisfaction.
-					<br>Bienvenue chez nous !</p>
 
-				<p style="text-align: center;">
-					<span style="font-weight: bold; font-size: 24px;">Mr Parrot Vincent</span>
-				</p>
-			</div>
+	<section class="bg-light container">
+		<div class="bg-light ">
+			<div class="py-5">
+					<div class="box">
+						<h2>Depuis 15 ans, notre garage a su gagner votre confiance et vos sourires.</h2>
+						<p>En effet, nous avons des services de qualité, une expertise inégalée et une équipe dévouée
+																					grace à nos techniciens qui font tout pour vous apporter une entière satisfaction.
+							<br>Bienvenue chez nous !</p>
 
+						<p style="text-align: center;">
+							<span style="font-weight: bold; font-size: 24px;">Mr Parrot Vincent</span>
+						</p>
+					</div>
+				</div>
+		</div>
+			
+
+		<div class="container">
+			{% for info in infoSpecial %}
+				{% if info.id != 0 %}
+					<div class="text-center scrolling-text fw-semibold" >
+						<span class="scrolling-text_content" style="color:dark">{{ info.designation }}</span>
+					</div>
+				{% endif %}
+			{% endfor %}
 		</div>
 	</section>
-
-	<hr class="custom-line"><hr class="custom-line">
-
 {% endblock %}
 
 
 {% block caroussel %}
 
 	<!-- Caroussel -->
-	<div class="cadre">
+	<div class="container bg-light">
 		<div class="col-md-7 col-lg-7 m-auto">
-			<br>
-			<h6 class="text-center display-5">Quelques belles voitures qui sont passées dans notre garage</h6>
+			<h6 class="text-center display-5 pt-5">Quelques belles voitures qui sont passées dans notre garage</h6>
 			<!-- Carousel -->
 			<div
 				class="carousel slide" data-bs-ride="carousel" data-interval="1000">
@@ -163,7 +171,7 @@
 					<strong>Quelques exemples de voitures mises en vente</strong>
 				</h6>
 			</div><br>
-			<section data-bs-version="5.1" class="my-5" id="">
+			<section class="my-5">
 				<div class="container">
 					<div class="row mt-4">
 						<div class="col-12 col-md-6 col-lg-4 mb-4">
@@ -171,12 +179,12 @@
 								<div class="">
 									<img class="rounded-top-3 w-98" src="assets/images/R5.png" alt="Renault 5" title="">
 								</div>
-								<div class="bg-light ps-2">
-									<h5 class="display-5">
+								<div class="bg-light ps-3 pb-2">
+									<h5 class="display-5 pt-1">
 										<strong>Renault 5</strong>
 									</h5>
 									<h6 class="mt-1">Caractéristiques&nbsp;</h6>
-									<p class="mt-3 display-7">Superbe Renault 5 des années 80. Entretenu par une personne agée qui en a pris soin pendant toutes ces années</p>
+									<p class="mt-3 pe-2">Superbe Renault 5 des années 80. Entretenu par une personne agée qui en a pris soin pendant toutes ces années</p>
 								</div>
 							</div>
 						</div>
@@ -185,12 +193,12 @@
 								<div class="">
 									<img class="rounded-top-3 w-98" src="assets/images/2cv.png" alt="2CV" title="">
 								</div>
-								<div class="bg-light ps-2">
-									<h5 class="display-5">
+								<div class="bg-light ps-3 pb-2">
+									<h5 class="display-5 pt-1">
 										<strong>2 CV</strong>
 									</h5>
-									<h6 class="mt-1">Caractéristiques&nbsp;</h6>
-									<p class="mt-3">Une dodoche inusable qui a fait le bonheur de beaucoup, en allant quelque fois faire des pique-nique en campagne.</p>
+									<h6 class="mb-2">Caractéristiques</h6>
+									<p class="mt-3 pe-2">Une dodoche inusable qui a fait le bonheur de beaucoup, en allant quelque fois faire des pique-nique à la campagne.</p>
 								</div>
 							</div>
 						</div>
@@ -199,12 +207,12 @@
 								<div class="">
 									<img class="rounded-top-3 w-98" src="assets/images/4l.png" alt="4L" title="">
 								</div>
-								<div class="bg-light ps-2">
-									<h5 class="display-5">
+								<div class="bg-light ps-3 pb-2">
+									<h5 class="display-5 pt-1">
 										<strong>4 L</strong>
 									</h5>
-									<h6 class="mt-1">Caractéristiques&nbsp;</h6>
-									<p class="mt-3">Une 4L légendaire dont les nostalgiques se souviennent bien, car c'était une voiture très agréable à conduire .<br></p>
+									<h6 class="">Caractéristiques&nbsp;</h6>
+									<p class="mt-3 pe-2">Une 4L légendaire dont les nostalgiques se souviennent bien, car c'était une voiture très agréable à conduire .<br></p>
 								</div>
 							</div>
 						</div>
@@ -224,23 +232,21 @@
 						<h3 class="h4-title align-center mb-1 display-4 text-center">
 							<strong>Commentaires et notes des clients</strong>
 						</h3>
-
 						<div class="container my-5">
 							<div
 								class="row">
 								<!-- Colonnes des avis des clients -->
 								<div class="col-md-7">
 									<div class="card">
-										<div class="card-body colorCardBody">
-											<h1 class="text-center pr-5">Avis des clients</h1>
+										<div class="card-body rounded-2 card-color">
+											<h1 class="text-center bg-light">Avis des clients</h1>
 											<div
-												class="pr-5 form-scroll border rounded m-3">
-
+												class="form-scroll border rounded mt-3">
 												<!-- Affichage des témoignages -->
 												{% for temoignage in temoignages %}
 													{% if temoignage.acceptation == 1 %}
 														<div class="card my-3 border border-dark">
-															<div class="card-body">
+															<div class="m-3">
 																<h5 class="card-title">{{ temoignage.id }}-
 																	{{ temoignage.nom }}</h5>
 																<p class="card-text">{{ temoignage.commentaire }}</p>
@@ -253,31 +259,31 @@
 											</div>
 										</div>
 									</div>
-
 								</div>
 								<div class="col-md-1"></div>
-
 								<!-- Colonne du formulaire -->
 								<div class="col-md-4">
-									<div class="card">
-										<div class="card-body">
-											<h1 class="card-title text-center">Laissez votre témoignage</h1><br>
-											<form method="POST" action="{{ path('traitement_temoignage') }}" class="border border-primary rounded p-4" class="border border-primary rounded p-4">
+									<div class="card" style="width:24rem">
+										<div class="card-body card-color">
+										<div class="pb-3">
+											<h1 class="text-center bg-light">Laissez votre témoignage</h1>
+										</div>
+											<form method="POST" action="{{ path('traitement_temoignage') }}" class="border border-primary rounded p-3">
 												<div class="mb-3">
 													<label for="nom" class="form-label">Nom :</label>
-													<input type="text" class="form-control border border-primary" id="nom" name="nom" required>
+													<input type="text" class="form-control border border-dark" id="nom" name="nom" required>
 												</div>
 												<div class="mb-3">
 													<label for="commentaire" class="form-label">Commentaire :</label>
-													<textarea class="form-control border border-primary" id="commentaire" name="commentaire" required style="height: 142px;"></textarea>
+													<textarea class="form-control border border-dark" id="commentaire" name="commentaire" required style="height: 142px;"></textarea>
 												</div>
 												<div class="mb-3">
 													<label for="note" class="form-label">Note :</label>
 													<div class="col-md-6">
-														<input type="number" class="form-control border border-primary" id="note" name="note" min="1" max="5" required>
+														<input type="number" class="form-control border border-dark" id="note" name="note" min="1" max="5" required>
 													</div>
 												</div>
-												<button type="submit" class="btn btn-primary">Soumettre</button>
+												<button type="submit" class="btn btn-dark">Soumettre</button>
 											</form>
 										</div>
 									</div>
@@ -288,18 +294,19 @@
 				</div>
 			</div>
 		</section>
-		<hr class="custom-line"><hr class="custom-line">
+		<hr class="custom-line">
+		<hr class="custom-line">
 	{% endblock %}
 
-	{% block formulaireClients %}
-		<section data-bs-version="5.1" class="my-5">
+	{% block formulaireClients %}	
+		<section data-bs-version="5.1" class="p-5">
 			<div class="container">
 				<div class="row justify-content-center mt-4 ">
 					<div class="col-lg-7 mx-auto">
 						<div class="card">
-							<div class="card-body">
+							<div class="card-body rounded-2 card-color">
 								<div class="mt-4 pt-2">
-									<h3 class="align-center mb-0 display-4 text-center">
+									<h3 class="text-center pr-5 bg-light">
 										<strong>Contactez-nous</strong>
 									</h3>
 								</div>
@@ -310,31 +317,31 @@
 										<div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12"></div>
 									</div>
 									<div class="row">
-										<h6 class=" mb-4 text-center">
+										<h6 style="color:#EAE0D5" class=" mb-4 text-center">
 											(Un membre de notre équipe vous recontactera )
 										</h6>
-										{# <div class="col-lg-7 col-md-7 col-sm-7 mx-auto">
-																				                            
-																				                        </div> #}
+
 										<div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
-											<input type="text" name="name" placeholder="Nom" data-form-field="name" class="form-control" value="" id="name-form7-o">
+											<input type="text" name="name" placeholder="Nom" data-form-field="name" class="form-control" value="" id="name-form7-o" required>
 										</div>
 										<div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="name">
-											<input type="text" name="prenom" placeholder="Prénom" data-form-field="prenom" class="form-control" value="" id="prenom-form7-o">
+											<input type="text" name="prenom" placeholder="Prénom" data-form-field="prenom" class="form-control" value="" id="prenom-form7-o" required>
 										</div>
 
 										<div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="email">
-											<input type="email" name="email" placeholder="Adresse Email" data-form-field="email" class="form-control" value="" id="email-form7-o">
+											<input type="email" name="email" placeholder="Adresse Email" data-form-field="email" class="form-control" value="" id="email-form7-o" required>
 										</div>
 										<div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
-											<input type="tel" name="phone" placeholder="Téléphone" data-form-field="phone" class="form-control" value="" id="phone-form7-o">
+											<input type="tel" name="phone" placeholder="Téléphone" data-form-field="phone" class="form-control" value="" id="phone-form7-o" required>
 										</div>
 										<div class="col-lg-7 col-md-7 col-sm-7 mx-auto form-group mb-3" data-for="phone">
-											<input type="tel" name="message" placeholder="Message" data-form-field="messahge" class="form-control" value="" id="message-form7-o">
+											<input type="message" name="message" placeholder="Message" data-form-field="messahge" class="form-control" value="" id="message-form7-o" required style="height: 100px";>
 										</div>
 										<div class="col-lg-7 mx-auto mbr-section-btn align-center">
-											<button type="submit" class="btn btn-primary display-4">Envoyer</button>
+											<button type="submit" class="btn btn-dark display-4">Envoyer</button>
 										</div>
+										<div id="form-message" class="alert alert-success col-12" style="display: none;">Merci de votre contatc. On vous rapelle.</div>
+
 									</div>
 								</form>
 							</div>
@@ -346,4 +353,11 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.querySelector('form').addEventListener('submit', function () {
+		document.getElementById('form-message').style.display = 'block';
+		});
+	</script>
+
 </section>{% endblock %}

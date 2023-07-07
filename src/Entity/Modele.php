@@ -2,32 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\OptionVoitureRepository;
+use App\Repository\ModeleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OptionVoitureRepository::class)]
-class OptionVoiture
+#[ORM\Entity(repositoryClass: ModeleRepository::class)]
+class Modele
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'optionVoitures')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Options $IDoptions = null;
+    #[ORM\Column(length: 30)]
+    private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'optionVoitures')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Voiture $IDvoiture = null;
-
-    #[ORM\OneToMany(mappedBy: 'IDoption', targetEntity: Voiture::class)]
+    #[ORM\OneToMany(mappedBy: 'IDmodele', targetEntity: Voiture::class)]
     private Collection $voitures;
 
-    // New property added
-   
+    #[ORM\ManyToOne(targetEntity: Marque::class)]
+    #[ORM\JoinColumn(name: "id_marque", referencedColumnName: "id")]
+    private ?Marque $IDmarque = null;
 
     public function __construct()
     {
@@ -39,28 +35,21 @@ class OptionVoiture
         return $this->id;
     }
 
-    public function getIDoptions(): ?Options
+    public function getNom(): ?string
     {
-        return $this->IDoptions;
+        return $this->nom;
     }
 
-    public function setIDoptions(?Options $IDoptions): self
+    public function setNom(string $nom): self
     {
-        $this->IDoptions = $IDoptions;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getIDvoiture(): ?Voiture
+    public function __toString()    //Il faut renvoyer un "get' ou la propriété déclaré est un "String", mais un 'get gégnéré dans la classe 'Modele'
     {
-        return $this->IDvoiture;
-    }
-
-    public function setIDvoiture(?Voiture $IDvoiture): self
-    {
-        $this->IDvoiture = $IDvoiture;
-
-        return $this;
+        return $this->getNom();
     }
 
     /**
@@ -71,11 +60,22 @@ class OptionVoiture
         return $this->voitures;
     }
 
+    public function getIDmarque(): ?Marque
+    {
+        return $this->IDmarque;
+    }
+
+    public function setIDmarque(?Marque $IDmarque): self
+    {
+        $this->IDmarque = $IDmarque;
+        return $this;
+    }
+
     public function addVoiture(Voiture $voiture): self
     {
         if (!$this->voitures->contains($voiture)) {
             $this->voitures->add($voiture);
-            $voiture->setIDoption($this);
+            $voiture->setIDmodele($this);
         }
 
         return $this;
@@ -85,15 +85,11 @@ class OptionVoiture
     {
         if ($this->voitures->removeElement($voiture)) {
             // set the owning side to null (unless already changed)
-            if ($voiture->getIDoption() === $this) {
-                $voiture->setIDoption(null);
+            if ($voiture->getIDmodele() === $this) {
+                $voiture->setIDmodele(null);
             }
         }
 
         return $this;
     }
-
-
-   
-
 }
